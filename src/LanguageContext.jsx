@@ -89,7 +89,7 @@ export const LanguageProvider = ({ children }) => {
             chapter4Sub: "پاراستنی بەکارهێنی ئینتەرنێت",
             chapter5: "بەشی پێنجەم",
             chapter5Sub: "مامۆستای سایبەر سکیوریتی",
-            passwordMasterTitle: "مامۆستای پاسوۆرد",
+            passwordMasterGame: "مامۆستای پاسوۆرد",
             passwordDesc: "فێربە چۆن پاسوۆردی بەهێز دروست بکەیت و بیپارێزیت",
             socialMedia: "پاراستنی سۆشیال میدیا",
             socialMediaDesc: "فێربە چۆن هەژمارەکانی سۆشیال میدیات بپارێزیت",
@@ -161,7 +161,24 @@ export const LanguageProvider = ({ children }) => {
                 hackerAttack: "هێرشبەرەکە {pc}ی پاراستنی کرد! {strength} تێپەڕەوشە ناتوانێت پاراستن بکات.",
                 strongPasswordSet: "تێپەڕەوشەی بەهێز دانرا! هێرشبەر ناتوانێت هێرش بکاتە سەر.",
                 startTest: "دەستپێکردنی تێست",
-                level: "ئاست"
+                level: "ئاست",
+                howToPlay: "چۆن یاری بکەین",
+                objectiveTitle: "ئامانج",
+                objective: "هەموو کۆمپیوتەرەکان بە دانانی تێپەڕەوشەی بەهێز پاراستن بکە.",
+                controlsTitle: "کۆنتڕۆڵەکان",
+                controls: "کلیلی تیری بەکاربهێنە بۆ جوڵاندنی کەسایەتییەکەت.",
+                passwordRulesTitle: "یاساکانی تێپەڕەوشە",
+                rule1: "کەمتر نەبێت لە ٨ پیت",
+                rule2: "پیتی گەورە بخوێنێتەوە",
+                rule3: "پیتی بچووک بخوێنێتەوە",
+                rule4: "ژمارە بخوێنێتەوە",
+                rule5: "هێماهای تایبەت بخوێنێتەوە",
+                scoringTitle: "هەژمارکردن",
+                scoring1: "+١٥ خاڵ بۆ تێپەڕەوشەی بەهێز",
+                scoring2: "-١٠ خاڵ کاتێ کۆمپیوتەرێ دەکرێتەوە",
+                scoring3: "+١٠٠ خاڵی زیاتر بۆ تەواوکردنی ئاست",
+                tip: "ئامۆژگاری: تێپەڕەوشە دروست بکە کە هەموو پێویستییەکان جێبەجێ بکات!",
+                startButton: "دەستپێکردنی یاری"
             }
         },
         english: {
@@ -310,7 +327,24 @@ export const LanguageProvider = ({ children }) => {
                 hackerAttack: "The hacker compromised {pc}! {strength} password cannot protect it.",
                 strongPasswordSet: "Strong password set! Hacker cannot attack.",
                 startTest: "Start Test",
-                level: "Level"
+                level: "Level",
+                howToPlay: "How to Play",
+                objectiveTitle: "Objective",
+                objective: "Protect all computers by setting strong passwords.",
+                controlsTitle: "Controls",
+                controls: "Use arrow keys to move your character around.",
+                passwordRulesTitle: "Password Rules",
+                rule1: "At least 8 characters long",
+                rule2: "Contains uppercase letters",
+                rule3: "Contains lowercase letters",
+                rule4: "Contains numbers",
+                rule5: "Contains special characters",
+                scoringTitle: "Scoring",
+                scoring1: "+15 points for strong passwords",
+                scoring2: "-10 points when a PC gets hacked",
+                scoring3: "+100 bonus for completing level",
+                tip: "Tip: Create passwords that meet all requirements!",
+                startButton: "Start Game"
             }
         }
     };

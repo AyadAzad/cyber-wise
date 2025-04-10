@@ -12,7 +12,6 @@ const SocialMedia = () => {
     const { language, translations } = useLanguage();
     const t = translations[language];
     const [error, setError] = useState(null);
-    const [showInstructions, setShowInstructions] = useState(true); // New state for instructions
     const [token, setToken] = useState(localStorage.getItem('token'));
     const [currentScore, setCurrentScore] = useState(0);
     const [currentChallenge, setCurrentChallenge] = useState(1);
@@ -96,9 +95,7 @@ const SocialMedia = () => {
         }
     };
 
-    const startGame = () => {
-        setShowInstructions(false);
-    };
+
 
     if (showQuiz) {
         return (
@@ -109,59 +106,6 @@ const SocialMedia = () => {
             />
         );
     }
-
-    if (showInstructions) {
-        return (
-            <div className="container">
-                <div className="game-instructions">
-                    <h2>{language === 'kurdish' ? 'ڕێنمایی یاری' : 'How to Play'}</h2>
-                    <div className="instructions-content">
-                        <p>
-                            {language === 'kurdish' ?
-                                'بەخێربێیت بۆ یاری مەدیای کۆمەڵایەتی! لەم یاریەدا:' :
-                                'Welcome to the Social Media Game! In this game:'}
-                        </p>
-                        <ul>
-                            <li>
-                                {language === 'kurdish' ?
-                                    '٣ ئەرکی جیاواز دەبێت تەواو بکەیت' :
-                                    'You will complete 3 different challenges'}
-                            </li>
-                            <li>
-                                {language === 'kurdish' ?
-                                    'خاڵ بۆ هەر وەڵامێکی ڕاست کۆدەکەیتەوە' :
-                                    'You earn points for each correct answer'}
-                            </li>
-                            <li>
-                                {language === 'kurdish' ?
-                                    'لە کۆتای هەر ئەرکێک، دەچیتە ئەرکی دوواتر' :
-                                    'After each challenge, you will proceed to the next one'}
-                            </li>
-                            <li>
-                                {language === 'kurdish' ?
-                                    'لە کۆتای یاریەکە، پێشبڕکێیەکی کوتاهی بچووک دەبێت' :
-                                    'At the end, you will take a short quiz'}
-                            </li>
-                            <li>
-                                {language === 'kurdish' ?
-                                    'خاڵەکانت لە سیستەمەکەدا تۆمار دەکرێن' :
-                                    'Your score will be saved in the system'}
-                            </li>
-                        </ul>
-                        <p>
-                            {language === 'kurdish' ?
-                                'ئامادەیت؟ دەستپێبکەین!' :
-                                'Ready? Let\'s begin!'}
-                        </p>
-                        <button className="start-button" onClick={startGame}>
-                            {language === 'kurdish' ? 'دەستپێکردن' : 'Start Game'}
-                        </button>
-                    </div>
-                </div>
-            </div>
-        );
-    }
-
     return (
         <div className="container">
             {error && (
