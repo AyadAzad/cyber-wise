@@ -8,6 +8,7 @@ import FinalModal from './FinalModal';
 import Quiz from '../../Quiz';
 import {useNavigate} from "react-router-dom";
 import {useLanguage} from "../../../LanguageContext.jsx";
+
 const PhoneProtection = () => {
     const { language, translations } = useLanguage();
     const t = translations[language];
@@ -131,6 +132,31 @@ const PhoneProtection = () => {
             <h2 className="level-title">
                 {language === 'kurdish' ? `ئاستی ${levelNumber}: پاراستنی مۆبایل` : `Level ${levelNumber}: Mobile Protection`}
             </h2>
+
+            {/* Added gameplay instructions */}
+            <div className="game-instructions">
+                <h3>{language === 'kurdish' ? 'چۆنیەتی یاری کردن' : 'How to Play'}</h3>
+                <ul>
+                    {language === 'kurdish' ? (
+                        <>
+                            <li> چوار بەشی جیاواز دەبێت تەواو بکەیت: ڕێکخستنی پاراستن، فێڵی سەمەرە، مۆڵەتی ئەپەکان، و پاراستنی تۆڕ</li>
+                            <li> لە هەر بەشێکدا، دەبێت وەڵامی راست بدەیتەوە بۆ کێشەکانی پاراستنی مۆبایل</li>
+                            <li> خاڵ بۆ هەر وەڵامێکی راست وەردەگریت</li>
+                            <li> دوای تەواوکردنی هەموو بەشەکان، پێویستە تێستێک بکەیت</li>
+                            <li> کۆی خاڵەکانت لە هەموو بەشەکاندا دیاری دەکات ئایا ئاستەکە تەواو کردووە یان نا</li>
+                        </>
+                    ) : (
+                        <>
+                            <li>You'll complete four different sections: Security Setup, Phishing, App Permissions, and Network Security</li>
+                            <li>In each section, solve mobile protection challenges by choosing correct answers</li>
+                            <li>Earn points for each correct response</li>
+                            <li>After completing all sections, you'll take a final quiz</li>
+                            <li>Your total score across all sections determines if you pass the level</li>
+                        </>
+                    )}
+                </ul>
+            </div>
+
             <p className="level-description">
                 {language === 'kurdish'
                     ? 'لەم ئاستەدا فێری پاراستنی مۆبایلەکەت دەبیت لە هەڕەشە جیاوازەکان وەک ڤایرۆس، فێڵی سەمەرە، و دەستڕاگەیشتنی نایاسایی.'

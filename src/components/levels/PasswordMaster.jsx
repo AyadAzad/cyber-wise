@@ -5,6 +5,53 @@ import {useNavigate} from "react-router-dom";
 import Quiz from "../Quiz.jsx";
 import {useLanguage} from "../../LanguageContext.jsx";
 
+const GameInstructions = ({ t, onClose }) => {
+    return (
+        <div className="instructions-modal">
+            <div className="instructions-content">
+                <h2>{t.howToPlay}</h2>
+
+                <div className="instruction-section">
+                    <h3>{t.objectiveTitle}</h3>
+                    <p>{t.objective}</p>
+                </div>
+
+                <div className="instruction-section">
+                    <h3>{t.controlsTitle}</h3>
+                    <p>{t.controls}</p>
+                </div>
+
+                <div className="instruction-section">
+                    <h3>{t.passwordRulesTitle}</h3>
+                    <ul className="rules-list">
+                        <li>{t.rule1}</li>
+                        <li>{t.rule2}</li>
+                        <li>{t.rule3}</li>
+                        <li>{t.rule4}</li>
+                        <li>{t.rule5}</li>
+                    </ul>
+                </div>
+
+                <div className="instruction-section">
+                    <h3>{t.scoringTitle}</h3>
+                    <ul className="rules-list">
+                        <li>{t.scoring1}</li>
+                        <li>{t.scoring2}</li>
+                        <li>{t.scoring3}</li>
+                    </ul>
+                </div>
+
+                <p className="game-tip">{t.tip}</p>
+
+                <button onClick={onClose} className="cyber-button">
+                    {t.startButton}
+                </button>
+            </div>
+        </div>
+    );
+};
+
+
 const PasswordMaster = ({ level = 1 }) => {
     const [passwords, setPasswords] = useState({});
     const [currentPC, setCurrentPC] = useState(null);
@@ -18,6 +65,7 @@ const PasswordMaster = ({ level = 1 }) => {
     let attacker;
     const navigate = useNavigate();
     const [error, setError] = useState(null);
+    const [showInstructions, setShowInstructions] = useState(true);
 
     // Get language context
     const { translations, language } = useLanguage();
@@ -231,6 +279,13 @@ const PasswordMaster = ({ level = 1 }) => {
 
     return (
         <div className="game-container" dir={language === 'kurdish' ? 'rtl' : 'ltr'}>
+            {showInstructions && (
+                <GameInstructions
+                    t={t}
+                    onClose={() => setShowInstructions(false)}
+                />
+            )}
+
             {error && (
                 <div className="error-message">
                     {error}

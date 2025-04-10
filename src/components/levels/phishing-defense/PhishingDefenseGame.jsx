@@ -7,6 +7,7 @@ import EmailChallenge from "./EmailChallenge.jsx";
 import Quiz from '../../Quiz';
 import { useNavigate } from 'react-router-dom';
 import {useLanguage} from "../../../LanguageContext.jsx";
+
 const Level3 = () => {
     const { language, translations } = useLanguage();
     const t = translations[language];
@@ -130,6 +131,31 @@ const Level3 = () => {
             <h2 className="level-title">
                 {language === 'kurdish' ? 'ئاستی ٣: بەرگری لە هێرشەکانی فیشینگ' : 'Level 3: Phishing Attack Defense'}
             </h2>
+
+            {/* Added gameplay instructions */}
+            <div className="game-instructions">
+                <h3>{language === 'kurdish' ? 'چۆنیەتی یاری کردن' : 'How to Play'}</h3>
+                <ul>
+                    {language === 'kurdish' ? (
+                        <>
+                            <li> سێ بەشی جیاواز دەبێت تەواو بکەیت: ئیمەیڵی فیشینگ، لینکی ساختە، و وەڵامدانەوەی ڕاست</li>
+                            <li> لە هەر بەشێکدا، دەبێت هێرشی فیشینگ دیاری بکەیت و وەڵامی راست بدەیتەوە</li>
+                            <li> خاڵ بۆ هەر وەڵامێکی راست وەردەگریت</li>
+                            <li> دوای تەواوکردنی سێ بەشەکە، پێویستە تێستێک بکەیت</li>
+                            <li> کۆی خاڵەکانت لە هەموو بەشەکاندا دیاری دەکات ئایا ئاستەکە تەواو کردووە یان نا</li>
+                        </>
+                    ) : (
+                        <>
+                            <li>You'll complete three different challenges: Phishing emails, Fake links, and Proper responses</li>
+                            <li>In each challenge, identify the phishing attempt and select the correct action</li>
+                            <li>Earn points for each correct identification and response</li>
+                            <li>After completing all challenges, you'll take a final quiz</li>
+                            <li>Your total score from all sections determines if you pass the level</li>
+                        </>
+                    )}
+                </ul>
+            </div>
+
             <p className="level-description">
                 {language === 'kurdish'
                     ? 'لەم ئاستەدا فێری ناسینەوە و بەرگری لە هێرشەکانی فیشینگ دەبیت لە ڕێگەی چەند چالاکییەکی پێشکەوتوو.'

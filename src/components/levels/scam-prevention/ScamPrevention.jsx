@@ -7,6 +7,7 @@ import Quiz from "../../Quiz";
 import FinalModal from "../phone-protection/FinalModal.jsx";
 import {useNavigate} from "react-router-dom";
 import {useLanguage} from "../../../LanguageContext.jsx";
+
 const ScamPrevention = () => {
     const { language, translations } = useLanguage();
     const t = translations[language];
@@ -131,6 +132,31 @@ const ScamPrevention = () => {
                     ? `ئاستی ${levelNumber}: پاراستنی خۆت لە فێڵەکانی سەمەرە`
                     : `Level ${levelNumber}: Protecting Yourself from Scams`}
             </h2>
+
+            {/* Added gameplay instructions */}
+            <div className="game-instructions">
+                <h3>{language === 'kurdish' ? 'چۆنیەتی یاری کردن' : 'How to Play'}</h3>
+                <ul>
+                    {language === 'kurdish' ? (
+                        <>
+                            <li> سێ بەشی جیاواز دەبێت تەواو بکەیت: فێڵی تەلەفۆن، فێڵی ئینتەرنێت، و فێڵی دراو</li>
+                            <li> لە هەر بەشێکدا، دەبێت فێڵەکە دیاری بکەیت و وەڵامی راست بەیت</li>
+                            <li> خاڵ بۆ هەر وەڵامێکی راست وەردەگریت</li>
+                            <li> دوای تەواوکردنی سێ بەشەکە، پێویستە تێستێک بکەیت</li>
+                            <li> کۆی خاڵەکانت لە هەموو بەشەکاندا دیاری دەکات ئایا ئاستەکە تەواو کردووە یان نا</li>
+                        </>
+                    ) : (
+                        <>
+                            <li>You'll need to complete three different sections: Phone scams, Internet scams, and Money scams</li>
+                            <li>In each section, identify the scam and choose the correct response</li>
+                            <li>You'll earn points for each correct answer</li>
+                            <li>After completing all three sections, you'll take a final quiz</li>
+                            <li>Your total score from all sections determines if you pass the level</li>
+                        </>
+                    )}
+                </ul>
+            </div>
+
             <p className="level-description">
                 {language === 'kurdish'
                     ? 'لەم ئاستەدا فێری ناسینەوە و پاراستنی خۆت دەبیت لە فێڵە جیاوازەکانی سەمەرە لەسەر ئینتەرنێت و ژمارە مۆبایل.'
