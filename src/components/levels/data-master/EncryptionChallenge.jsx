@@ -1,7 +1,10 @@
-// EncryptionChallenge.js
 import React, { useState } from 'react';
+import {useLanguage} from "../../../LanguageContext.jsx";
 
 const EncryptionChallenge = ({ completeChallenge }) => {
+    const { language, translations } = useLanguage();
+    const t = translations[language];
+
     const [currentQuestion, setCurrentQuestion] = useState(1);
     const [score, setScore] = useState(0);
     const [showResult, setShowResult] = useState(false);
@@ -9,36 +12,96 @@ const EncryptionChallenge = ({ completeChallenge }) => {
     const questions = [
         {
             id: 1,
-            question: "کام لەم ڕێگایانە پاراستنی زانیاری باشترە بۆ ناردنی زانیاری حیسابی بانکی؟",
+            question: language === 'kurdish'
+                ? "کام لەم ڕێگایانە پاراستنی زانیاری باشترە بۆ ناردنی زانیاری حیسابی بانکی؟"
+                : "Which of these methods provides better protection for sending banking information?",
             options: [
-                { id: 1, text: "ئیمەیڵی ئاسایی", correct: false },
-                { id: 2, text: "پەیامی تەلەفۆنی ئاسایی", correct: false },
-                { id: 3, text: "پەڕەی وێب بە HTTPS", correct: true },
-                { id: 4, text: "پەیامی کەناڵێکی کۆمەڵایەتی", correct: false }
+                {
+                    id: 1,
+                    text: language === 'kurdish' ? "ئیمەیڵی ئاسایی" : "Regular email",
+                    correct: false
+                },
+                {
+                    id: 2,
+                    text: language === 'kurdish' ? "پەیامی تەلەفۆنی ئاسایی" : "Regular text message",
+                    correct: false
+                },
+                {
+                    id: 3,
+                    text: language === 'kurdish' ? "پەڕەی وێب بە HTTPS" : "Website with HTTPS",
+                    correct: true
+                },
+                {
+                    id: 4,
+                    text: language === 'kurdish' ? "پەیامی کەناڵێکی کۆمەڵایەتی" : "Social media message",
+                    correct: false
+                }
             ],
-            explanation: "HTTPS پاراستنی زانیاری دڵنیاکراوە دابین دەکات لە کاتی ناردن بەناو تۆڕی ئینتەرنێت."
+            explanation: language === 'kurdish'
+                ? "HTTPS پاراستنی زانیاری دڵنیاکراوە دابین دەکات لە کاتی ناردن بەناو تۆڕی ئینتەرنێت."
+                : "HTTPS provides secure encrypted communication over the internet network."
         },
         {
             id: 2,
-            question: "کام لەمە نوێنەرایەتی دەکات باشترین ڕێگای پاراستنی زانیاری لەسەر دیسکی ڕەق؟",
+            question: language === 'kurdish'
+                ? "کام لەمە نوێنەرایەتی دەکات باشترین ڕێگای پاراستنی زانیاری لەسەر دیسکی ڕەق؟"
+                : "Which of these represents the best way to protect data on a hard drive?",
             options: [
-                { id: 1, text: "FAT32", correct: false },
-                { id: 2, text: "NTFS بەبێ پاراستن", correct: false },
-                { id: 3, text: "BitLocker یان AES encryption", correct: true },
-                { id: 4, text: "Zip فایل بە وشەی نهێنی", correct: false }
+                {
+                    id: 1,
+                    text: "FAT32",
+                    correct: false
+                },
+                {
+                    id: 2,
+                    text: language === 'kurdish' ? "NTFS بەبێ پاراستن" : "NTFS without protection",
+                    correct: false
+                },
+                {
+                    id: 3,
+                    text: language === 'kurdish' ? "BitLocker یان AES encryption" : "BitLocker or AES encryption",
+                    correct: true
+                },
+                {
+                    id: 4,
+                    text: language === 'kurdish' ? "Zip فایل بە وشەی نهێنی" : "Zip file with password",
+                    correct: false
+                }
             ],
-            explanation: "BitLocker و AES شێوازی پاراستنی تەواوی دیسک (Full Disk Encryption) دابین دەکەن."
+            explanation: language === 'kurdish'
+                ? "BitLocker و AES شێوازی پاراستنی تەواوی دیسک (Full Disk Encryption) دابین دەکەن."
+                : "BitLocker and AES provide Full Disk Encryption (FDE) protection."
         },
         {
             id: 3,
-            question: "کام لەمە باشترین ڕێگایە بۆ پاراستنی زانیاری لە مۆبایل؟",
+            question: language === 'kurdish'
+                ? "کام لەمە باشترین ڕێگایە بۆ پاراستنی زانیاری لە مۆبایل؟"
+                : "Which of these is the best way to protect data on a mobile phone?",
             options: [
-                { id: 1, text: "وشەی نهێنی ٤ ڕەقەمەری", correct: false },
-                { id: 2, text: "نمایشەکانی قۆڵ (Pattern)", correct: false },
-                { id: 3, text: "پەنجەنووس یان دەماغنووس", correct: true },
-                { id: 4, text: "بێ پاراستن", correct: false }
+                {
+                    id: 1,
+                    text: language === 'kurdish' ? "وشەی نهێنی ٤ ڕەقەمەری" : "4-digit PIN",
+                    correct: false
+                },
+                {
+                    id: 2,
+                    text: language === 'kurdish' ? "نمایشەکانی قۆڵ (Pattern)" : "Screen pattern",
+                    correct: false
+                },
+                {
+                    id: 3,
+                    text: language === 'kurdish' ? "پەنجەنووس یان دەماغنووس" : "Fingerprint or face recognition",
+                    correct: true
+                },
+                {
+                    id: 4,
+                    text: language === 'kurdish' ? "بێ پاراستن" : "No protection",
+                    correct: false
+                }
             ],
-            explanation: "پەنجەنووس و دەماغنووس پاراستنی زیاتر دابین دەکەن چونکە کۆپی کردنیان قورسە."
+            explanation: language === 'kurdish'
+                ? "پەنجەنووس و دەماغنووس پاراستنی زیاتر دابین دەکەن چونکە کۆپی کردنیان قورسە."
+                : "Fingerprint and face recognition provide better protection as they're harder to replicate."
         }
     ];
 
@@ -57,13 +120,17 @@ const EncryptionChallenge = ({ completeChallenge }) => {
 
     return (
         <div className="challenge-card">
-            <h3>چالاکی ٢: پاراستنی زانیاری</h3>
-            <p className="instructions">وەڵامی پرسیارەکانی خوارەوە بدەوە</p>
+            <h3>{language === 'kurdish' ? 'چالاکی ٢: پاراستنی زانیاری' : 'Activity 2: Data Protection'}</h3>
+            <p className="instructions">
+                {language === 'kurdish' ? 'وەڵامی پرسیارەکانی خوارەوە بدەوە' : 'Answer the following questions'}
+            </p>
 
             {!showResult ? (
                 <>
                     <div className="question-progress">
-                        پرسیار {currentQuestion} لە {questions.length}
+                        {language === 'kurdish'
+                            ? `پرسیار ${currentQuestion} لە ${questions.length}`
+                            : `Question ${currentQuestion} of ${questions.length}`}
                     </div>
 
                     <div className="question-box">
@@ -88,14 +155,30 @@ const EncryptionChallenge = ({ completeChallenge }) => {
                     {score >= 20 ? (
                         <>
                             <i className="fas fa-check-circle"></i>
-                            <p>زۆر باش! تۆ زانیاری باشت هەیە لەسەر پاراستنی زانیاری.</p>
-                            <p>کۆی خاڵەکان: {score}</p>
+                            <p>
+                                {language === 'kurdish'
+                                    ? 'زۆر باش! تۆ زانیاری باشت هەیە لەسەر پاراستنی زانیاری.'
+                                    : 'Excellent! You have good knowledge about data protection.'}
+                            </p>
+                            <p>
+                                {language === 'kurdish'
+                                    ? 'کۆی خاڵەکان: '
+                                    : 'Total score: '}{score}
+                            </p>
                         </>
                     ) : (
                         <>
                             <i className="fas fa-times-circle"></i>
-                            <p>پێویستە زانیاری زیاتر بخوێنیتەوە لەسەر پاراستنی زانیاری.</p>
-                            <p>کۆی خاڵەکان: {score}</p>
+                            <p>
+                                {language === 'kurdish'
+                                    ? 'پێویستە زانیاری زیاتر بخوێنیتەوە لەسەر پاراستنی زانیاری.'
+                                    : 'You should learn more about data protection.'}
+                            </p>
+                            <p>
+                                {language === 'kurdish'
+                                    ? 'کۆی خاڵەکان: '
+                                    : 'Total score: '}{score}
+                            </p>
                         </>
                     )}
                 </div>

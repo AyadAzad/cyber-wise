@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
+import {useLanguage} from "../../../LanguageContext.jsx";
 
 const PrivacySettingsChallenge = ({ completeChallenge }) => {
+    const { language, translations } = useLanguage();
+    const t = translations[language];
+
     const [browserSettings, setBrowserSettings] = useState({
         cookies: 'some',
         tracking: false,
@@ -60,67 +64,117 @@ const PrivacySettingsChallenge = ({ completeChallenge }) => {
         const recommendations = [];
 
         if (browserSettings.cookies !== 'block') {
-            recommendations.push("• بلۆکی کوکییەکانی پەیوەندینەکراو");
+            recommendations.push(
+                language === 'kurdish'
+                    ? "• بلۆکی کوکییەکانی پەیوەندینەکراو"
+                    : "• Block third-party cookies"
+            );
         }
 
         if (!browserSettings.tracking) {
-            recommendations.push("• چالاککردنی ڕێگری لە شوێنکەوتن");
+            recommendations.push(
+                language === 'kurdish'
+                    ? "• چالاککردنی ڕێگری لە شوێنکەوتن"
+                    : "• Enable tracking prevention"
+            );
         }
 
         if (!browserSettings.https) {
-            recommendations.push("• چالاککردنی HTTPS بە شێوەیەکی خۆکار");
+            recommendations.push(
+                language === 'kurdish'
+                    ? "• چالاککردنی HTTPS بە شێوەیەکی خۆکار"
+                    : "• Enable automatic HTTPS"
+            );
         }
 
         if (browserSettings.location !== 'block') {
-            recommendations.push("• بلۆکی ئاستی شوێن");
+            recommendations.push(
+                language === 'kurdish'
+                    ? "• بلۆکی ئاستی شوێن"
+                    : "• Block location access"
+            );
         }
 
         if (browserSettings.passwordSaving) {
-            recommendations.push("• نەهێشتنی وشەی نهێنی لە وێبگەڕەکەت");
+            recommendations.push(
+                language === 'kurdish'
+                    ? "• نەهێشتنی وشەی نهێنی لە وێبگەڕەکەت"
+                    : "• Disable password saving in browser"
+            );
         }
 
         if (searchSettings.history) {
-            recommendations.push("• نەهێشتنی مێژووی گەڕان");
+            recommendations.push(
+                language === 'kurdish'
+                    ? "• نەهێشتنی مێژووی گەڕان"
+                    : "• Disable search history"
+            );
         }
 
         if (searchSettings.personalization) {
-            recommendations.push("• نەهێشتنی کەسیکردنەوە");
+            recommendations.push(
+                language === 'kurdish'
+                    ? "• نەهێشتنی کەسیکردنەوە"
+                    : "• Disable search personalization"
+            );
         }
 
         if (!searchSettings.safeSearch) {
-            recommendations.push("• چالاککردنی گەڕانی سەلامەت");
+            recommendations.push(
+                language === 'kurdish'
+                    ? "• چالاککردنی گەڕانی سەلامەت"
+                    : "• Enable safe search"
+            );
         }
 
         if (searchSettings.adTracking) {
-            recommendations.push("• ڕێگری لە شوێنکەوتنی ڕیکلام");
+            recommendations.push(
+                language === 'kurdish'
+                    ? "• ڕێگری لە شوێنکەوتنی ڕیکلام"
+                    : "• Disable ad tracking"
+            );
         }
 
-        return recommendations.length > 0 ? recommendations : ["• هەموو ڕێکخستنەکانت سەلامەتن!"];
+        return recommendations.length > 0 ? recommendations : [
+            language === 'kurdish'
+                ? "• هەموو ڕێکخستنەکانت سەلامەتن!"
+                : "• All your settings are secure!"
+        ];
     };
 
     return (
         <div className="challenge-card">
-            <h3>چالاکی ٣: ڕێکخستنەکانی پاراستنی نهێنی</h3>
-            <p className="instructions">ڕێکخستنەکانی خۆت دابنێ بۆ پاراستنی نهێنی</p>
+            <h3>{language === 'kurdish' ? 'چالاکی ٣: ڕێکخستنەکانی پاراستنی نهێنی' : 'Activity 3: Privacy Settings'}</h3>
+            <p className="instructions">
+                {language === 'kurdish'
+                    ? 'ڕێکخستنەکانی خۆت دابنێ بۆ پاراستنی نهێنی'
+                    : 'Configure your settings for privacy protection'}
+            </p>
 
             <div className="settings-container">
                 <div className="settings-section">
-                    <h4>ڕێکخستنەکانی وێبگەڕ:</h4>
+                    <h4>{language === 'kurdish' ? 'ڕێکخستنەکانی وێبگەڕ:' : 'Browser Settings:'}</h4>
 
                     <div className="setting-item">
-                        <label>مامەڵە لەگەڵ کوکی:</label>
+                        <label>{language === 'kurdish' ? 'مامەڵە لەگەڵ کوکی:' : 'Cookie handling:'}</label>
                         <select
                             value={browserSettings.cookies}
                             onChange={(e) => handleBrowserChange('cookies', e.target.value)}
                         >
-                            <option value="all">قبوڵکردنی هەموو کوکییەکان</option>
-                            <option value="some">تەنها کوکییە پەیوەندینەکراوەکان</option>
-                            <option value="block">ڕێگری لە هەموو کوکییەکان</option>
+                            <option value="all">
+                                {language === 'kurdish' ? 'قبوڵکردنی هەموو کوکییەکان' : 'Accept all cookies'}
+                            </option>
+                            <option value="some">
+                                {language === 'kurdish' ? 'تەنها کوکییە پەیوەندینەکراوەکان' : 'Only first-party cookies'}
+                            </option>
+                            <option value="block">
+                                {language === 'kurdish' ? 'ڕێگری لە هەموو کوکییەکان' : 'Block all cookies'}
+                            </option>
                         </select>
                     </div>
 
                     <div className="setting-item">
-                        <label>ڕێگری لە شوێنکەوتن:</label>
+                        <label>{language === 'kurdish' ? 'ڕێگری لە شوێنکەوتن:' : 'Tracking prevention:'}</label>
                         <input
                             type="checkbox"
                             checked={browserSettings.tracking}
@@ -129,7 +183,7 @@ const PrivacySettingsChallenge = ({ completeChallenge }) => {
                     </div>
 
                     <div className="setting-item">
-                        <label>HTTPS بە شێوەیەکی خۆکار:</label>
+                        <label>{language === 'kurdish' ? 'HTTPS بە شێوەیەکی خۆکار:' : 'Automatic HTTPS:'}</label>
                         <input
                             type="checkbox"
                             checked={browserSettings.https}
@@ -138,19 +192,25 @@ const PrivacySettingsChallenge = ({ completeChallenge }) => {
                     </div>
 
                     <div className="setting-item">
-                        <label>دەستگەیشتن بە شوێن:</label>
+                        <label>{language === 'kurdish' ? 'دەستگەیشتن بە شوێن:' : 'Location access:'}</label>
                         <select
                             value={browserSettings.location}
                             onChange={(e) => handleBrowserChange('location', e.target.value)}
                         >
-                            <option value="allow">ڕێگەدان</option>
-                            <option value="ask">پرسیارکردن</option>
-                            <option value="block">ڕێگری</option>
+                            <option value="allow">
+                                {language === 'kurdish' ? 'ڕێگەدان' : 'Allow'}
+                            </option>
+                            <option value="ask">
+                                {language === 'kurdish' ? 'پرسیارکردن' : 'Ask'}
+                            </option>
+                            <option value="block">
+                                {language === 'kurdish' ? 'ڕێگری' : 'Block'}
+                            </option>
                         </select>
                     </div>
 
                     <div className="setting-item">
-                        <label>هەڵگرتنی وشەی نهێنی:</label>
+                        <label>{language === 'kurdish' ? 'هەڵگرتنی وشەی نهێنی:' : 'Password saving:'}</label>
                         <input
                             type="checkbox"
                             checked={browserSettings.passwordSaving}
@@ -160,10 +220,10 @@ const PrivacySettingsChallenge = ({ completeChallenge }) => {
                 </div>
 
                 <div className="settings-section">
-                    <h4>ڕێکخستنەکانی مووتۆری گەڕان:</h4>
+                    <h4>{language === 'kurdish' ? 'ڕێکخستنەکانی مووتۆری گەڕان:' : 'Search Engine Settings:'}</h4>
 
                     <div className="setting-item">
-                        <label>هەڵگرتنی مێژووی گەڕان:</label>
+                        <label>{language === 'kurdish' ? 'هەڵگرتنی مێژووی گەڕان:' : 'Save search history:'}</label>
                         <input
                             type="checkbox"
                             checked={searchSettings.history}
@@ -172,7 +232,7 @@ const PrivacySettingsChallenge = ({ completeChallenge }) => {
                     </div>
 
                     <div className="setting-item">
-                        <label>کەسیکردنەوەی ئەنجامەکان:</label>
+                        <label>{language === 'kurdish' ? 'کەسیکردنەوەی ئەنجامەکان:' : 'Personalized results:'}</label>
                         <input
                             type="checkbox"
                             checked={searchSettings.personalization}
@@ -181,7 +241,7 @@ const PrivacySettingsChallenge = ({ completeChallenge }) => {
                     </div>
 
                     <div className="setting-item">
-                        <label>گەڕانی سەلامەت:</label>
+                        <label>{language === 'kurdish' ? 'گەڕانی سەلامەت:' : 'Safe search:'}</label>
                         <input
                             type="checkbox"
                             checked={searchSettings.safeSearch}
@@ -190,7 +250,7 @@ const PrivacySettingsChallenge = ({ completeChallenge }) => {
                     </div>
 
                     <div className="setting-item">
-                        <label>شوێنکەوتنی ڕیکلام:</label>
+                        <label>{language === 'kurdish' ? 'شوێنکەوتنی ڕیکلام:' : 'Ad tracking:'}</label>
                         <input
                             type="checkbox"
                             checked={searchSettings.adTracking}
@@ -201,7 +261,7 @@ const PrivacySettingsChallenge = ({ completeChallenge }) => {
             </div>
 
             <button className="check-button" onClick={checkSettings}>
-                پشکنینی ڕێکخستنەکان
+                {language === 'kurdish' ? 'پشکنینی ڕێکخستنەکان' : 'Check Settings'}
             </button>
 
             {showFeedback && (
@@ -209,12 +269,20 @@ const PrivacySettingsChallenge = ({ completeChallenge }) => {
                     {score >= 70 ? (
                         <>
                             <i className="fas fa-check-circle"></i>
-                            <p>زۆر باش! ڕێکخستنەکانی پاراستنی نهێنی تۆ زۆر سەلامەتن.</p>
+                            <p>
+                                {language === 'kurdish'
+                                    ? 'زۆر باش! ڕێکخستنەکانی پاراستنی نهێنی تۆ زۆر سەلامەتن.'
+                                    : 'Excellent! Your privacy settings are very secure.'}
+                            </p>
                         </>
                     ) : (
                         <>
                             <i className="fas fa-times-circle"></i>
-                            <p>ڕێکخستنەکانت پێویستی بە باشترکردن هەیە. ئەم ڕەسەنانەی خوارەوە پێشنیار دەکرێن:</p>
+                            <p>
+                                {language === 'kurdish'
+                                    ? 'ڕێکخستنەکانت پێویستی بە باشترکردن هەیە. ئەم ڕەسەنانەی خوارەوە پێشنیار دەکرێن:'
+                                    : 'Your settings need improvement. The following recommendations are suggested:'}
+                            </p>
                             <ul className="recommendations">
                                 {getRecommendation().map((rec, index) => (
                                     <li key={index}>{rec}</li>
@@ -222,7 +290,9 @@ const PrivacySettingsChallenge = ({ completeChallenge }) => {
                             </ul>
                         </>
                     )}
-                    <p>کۆی خاڵەکان: {score}</p>
+                    <p>
+                        {language === 'kurdish' ? 'کۆی خاڵەکان: ' : 'Total score: '}{score}
+                    </p>
                 </div>
             )}
         </div>

@@ -1,45 +1,73 @@
 import React, { useState } from 'react';
+import {useLanguage} from "../../../LanguageContext.jsx";
 
 const SecureSharingChallenge = ({ completeChallenge }) => {
+    const { language, translations } = useLanguage();
+    const t = translations[language];
+
     const [selectedOptions, setSelectedOptions] = useState([]);
     const [showFeedback, setShowFeedback] = useState(false);
 
     const sharingMethods = [
         {
             id: 1,
-            method: "ناردنی ئیمەیڵ بە پەڕگەی چاکسازیکراو",
+            method: language === 'kurdish'
+                ? "ناردنی ئیمەیڵ بە پەڕگەی چاکسازیکراو"
+                : "Sending email with an attachment",
             secure: false,
-            reason: "ئیمەیڵ ناڕێگەلێکراوە و دەکرێت بخرێتە ناو چاودێری"
+            reason: language === 'kurdish'
+                ? "ئیمەیڵ ناڕێگەلێکراوە و دەکرێت بخرێتە ناو چاودێری"
+                : "Email is unencrypted and can be intercepted"
         },
         {
             id: 2,
-            method: "بەکارهێنانی خزمەتگوزاریەکی هاوبەشی پەڕگەی ئینتەرنێتی بە وشەی نهێنی",
+            method: language === 'kurdish'
+                ? "بەکارهێنانی خزمەتگوزاریەکی هاوبەشی پەڕگەی ئینتەرنێتی بە وشەی نهێنی"
+                : "Using an online file sharing service with password",
             secure: true,
-            reason: "پەڕگەکە تەنها بە کەسە ڕێگەپێدراوەکان دەبینرێت"
+            reason: language === 'kurdish'
+                ? "پەڕگەکە تەنها بە کەسە ڕێگەپێدراوەکان دەبینرێت"
+                : "The file is only visible to authorized people"
         },
         {
             id: 3,
-            method: "ناردنی پەیام لە ڕێگەی ئەپێکی نامە ناڕێگەلێکراوەکان",
+            method: language === 'kurdish'
+                ? "ناردنی پەیام لە ڕێگەی ئەپێکی نامە ناڕێگەلێکراوەکان"
+                : "Sending messages through unencrypted messaging apps",
             secure: false,
-            reason: "ئەپە ناڕێگەلێکراوەکان پاراستنی پێویستیان نییە"
+            reason: language === 'kurdish'
+                ? "ئەپە ناڕێگەلێکراوەکان پاراستنی پێویستیان نییە"
+                : "Unencrypted apps don't provide necessary protection"
         },
         {
             id: 4,
-            method: "بەکارهێنانی پلاتفۆرمێکی هاوبەشی سەلامەت بە کۆدی تایبەت",
+            method: language === 'kurdish'
+                ? "بەکارهێنانی پلاتفۆرمێکی هاوبەشی سەلامەت بە کۆدی تایبەت"
+                : "Using a secure sharing platform with unique code",
             secure: true,
-            reason: "پلاتفۆرمە سەلامەتەکان پاراستنی پێویست دابین دەکەن"
+            reason: language === 'kurdish'
+                ? "پلاتفۆرمە سەلامەتەکان پاراستنی پێویست دابین دەکەن"
+                : "Secure platforms provide necessary protection"
         },
         {
             id: 5,
-            method: "ناردنی پەڕگە لە ڕێگەی USB",
+            method: language === 'kurdish'
+                ? "ناردنی پەڕگە لە ڕێگەی USB"
+                : "Transferring files via USB",
             secure: false,
-            reason: "پەڕگەکە دەکرێت بگوازرێتەوە بۆ کۆمپیوتەری تر بەبێ چاودێری"
+            reason: language === 'kurdish'
+                ? "پەڕگەکە دەکرێت بگوازرێتەوە بۆ کۆمپیوتەری تر بەبێ چاودێری"
+                : "Files can be transferred to other computers without monitoring"
         },
         {
             id: 6,
-            method: "بەکارهێنانی سیستەمی داخستنی پەڕگە بە کلیل",
+            method: language === 'kurdish'
+                ? "بەکارهێنانی سیستەمی داخستنی پەڕگە بە کلیل"
+                : "Using file encryption with a key",
             secure: true,
-            reason: "تەنها کەسەکەی کلیلەکەی هەیە دەتوانێت پەڕگەکە بکاتەوە"
+            reason: language === 'kurdish'
+                ? "تەنها کەسەکەی کلیلەکەی هەیە دەتوانێت پەڕگەکە بکاتەوە"
+                : "Only the person with the key can open the file"
         }
     ];
 
@@ -72,9 +100,11 @@ const SecureSharingChallenge = ({ completeChallenge }) => {
 
     return (
         <div className="challenge-card">
-            <h3>چالاکی ٤: هاوبەشی سەلامەت (Secure Sharing)</h3>
+            <h3>{language === 'kurdish' ? 'چالاکی ٤: هاوبەشی سەلامەت' : 'Activity 4: Secure Sharing'}</h3>
             <p className="instructions">
-                کامیان لەم ڕێگایانە سەلامەتن بۆ هاوبەشی پەڕگەی حەساس؟ (هەمووی دیاری بکە)
+                {language === 'kurdish'
+                    ? 'کامیان لەم ڕێگایانە سەلامەتن بۆ هاوبەشی پەڕگەی حەساس؟ (هەمووی دیاری بکە)'
+                    : 'Which of these methods are secure for sharing sensitive files? (Select all)'}
             </p>
 
             <div className="methods-list">
@@ -100,7 +130,7 @@ const SecureSharingChallenge = ({ completeChallenge }) => {
             </div>
 
             <button className="check-button" onClick={checkAnswers}>
-                پشکنین
+                {language === 'kurdish' ? 'پشکنین' : 'Check'}
             </button>
 
             {showFeedback && (
@@ -115,12 +145,20 @@ const SecureSharingChallenge = ({ completeChallenge }) => {
                         (!method.secure && !selectedOptions.includes(method.id))) ? (
                         <>
                             <i className="fas fa-check-circle"></i>
-                            <p>زۆر باش! تۆ بە سەرکەوتوویی ڕێگا سەلامەتەکانی هاوبەشی زانیاریت ناسیەوە.</p>
+                            <p>
+                                {language === 'kurdish'
+                                    ? 'زۆر باش! تۆ بە سەرکەوتوویی ڕێگا سەلامەتەکانی هاوبەشی زانیاریت ناسیەوە.'
+                                    : 'Excellent! You successfully identified secure information sharing methods.'}
+                            </p>
                         </>
                     ) : (
                         <>
                             <i className="fas fa-info-circle"></i>
-                            <p>هەندێک هەڵەت کردووە. لەبیرت بێت کە پێویستە زانیاری حەساس بە پاراستنی تەواو هاوبەش بکرێت.</p>
+                            <p>
+                                {language === 'kurdish'
+                                    ? 'هەندێک هەڵەت کردووە. لەبیرت بێت کە پێویستە زانیاری حەساس بە پاراستنی تەواو هاوبەش بکرێت.'
+                                    : 'You made some mistakes. Remember that sensitive information must be shared with complete protection.'}
+                            </p>
                         </>
                     )}
                 </div>
@@ -128,4 +166,5 @@ const SecureSharingChallenge = ({ completeChallenge }) => {
         </div>
     );
 };
-export default SecureSharingChallenge
+
+export default SecureSharingChallenge;

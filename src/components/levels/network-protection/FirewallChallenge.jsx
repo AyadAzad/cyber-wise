@@ -1,16 +1,56 @@
 import React, { useState } from 'react';
+import { useLanguage } from "../../../LanguageContext.jsx";
 
 const FirewallChallenge = ({ completeChallenge }) => {
+    const { language, translations } = useLanguage();
+    const t = translations[language];
+
     const [selectedRules, setSelectedRules] = useState([]);
     const [showFeedback, setShowFeedback] = useState(false);
 
     const firewallRules = [
-        { id: 1, text: "ڕێگەدان بە هەموو پەیوەندیەکانەوە", correct: false },
-        { id: 2, text: "بلۆک کردنی پەیوەندیە نەناسراوەکان", correct: true },
-        { id: 3, text: "بلۆک کردنی پۆرتی نەناسراوی TCP/UDP", correct: true },
-        { id: 4, text: "ڕێگەدان بە پەیوەندی SSH لە دەرەوە", correct: false },
-        { id: 5, text: "چاودێریکردنی پەیوەندیەکانی ناوخۆیی", correct: true },
-        { id: 6, text: "ڕێگەدان بە هەموو پەیوەندیەکانی HTTP/HTTPS", correct: false }
+        {
+            id: 1,
+            text: language === 'kurdish'
+                ? "ڕێگەدان بە هەموو پەیوەندیەکانەوە"
+                : "Allow all incoming connections",
+            correct: false
+        },
+        {
+            id: 2,
+            text: language === 'kurdish'
+                ? "بلۆک کردنی پەیوەندیە نەناسراوەکان"
+                : "Block unknown connections",
+            correct: true
+        },
+        {
+            id: 3,
+            text: language === 'kurdish'
+                ? "بلۆک کردنی پۆرتی نەناسراوی TCP/UDP"
+                : "Block unfamiliar TCP/UDP ports",
+            correct: true
+        },
+        {
+            id: 4,
+            text: language === 'kurdish'
+                ? "ڕێگەدان بە پەیوەندی SSH لە دەرەوە"
+                : "Allow external SSH connections",
+            correct: false
+        },
+        {
+            id: 5,
+            text: language === 'kurdish'
+                ? "چاودێریکردنی پەیوەندیەکانی ناوخۆیی"
+                : "Monitor internal network connections",
+            correct: true
+        },
+        {
+            id: 6,
+            text: language === 'kurdish'
+                ? "ڕێگەدان بە هەموو پەیوەندیەکانی HTTP/HTTPS"
+                : "Allow all HTTP/HTTPS connections",
+            correct: false
+        }
     ];
 
     const toggleRule = (id) => {
@@ -35,8 +75,12 @@ const FirewallChallenge = ({ completeChallenge }) => {
 
     return (
         <div className="challenge-card">
-            <h3>چالاکی ١: ڕێکخستنی دیوارە ئاگرین</h3>
-            <p className="instructions">کامیان لەم ڕێسایانە پارێزەرە و پێویستە دیاری بکرێن بۆ پاراستنی تۆڕەکەت؟ (هەمووی دیاری بکە)</p>
+            <h3>{language === 'kurdish' ? 'چالاکی ١: ڕێکخستنی دیوارە ئاگرین' : 'Activity 1: Firewall Configuration'}</h3>
+            <p className="instructions">
+                {language === 'kurdish'
+                    ? "کامیان لەم ڕێسایانە پارێزەرە و پێویستە دیاری بکرێن بۆ پاراستنی تۆڕەکەت؟ (هەمووی دیاری بکە)"
+                    : "Which of these rules are protective and should be selected to secure your network? (Select all)"}
+            </p>
 
             <div className="rules-list">
                 {firewallRules.map(rule => (
@@ -56,7 +100,7 @@ const FirewallChallenge = ({ completeChallenge }) => {
             </div>
 
             <button className="check-button" onClick={checkConfiguration}>
-                پشکنین
+                {language === 'kurdish' ? 'پشکنین' : 'Check'}
             </button>
 
             {showFeedback && (
@@ -69,12 +113,20 @@ const FirewallChallenge = ({ completeChallenge }) => {
                         (!rule.correct && !selectedRules.includes(rule.id))) ? (
                         <>
                             <i className="fas fa-check-circle"></i>
-                            <p>زۆر باش! دیوارە ئاگرینەکەت بە باشی ڕێکخراوە بۆ پاراستنی تۆڕەکەت.</p>
+                            <p>
+                                {language === 'kurdish'
+                                    ? 'زۆر باش! دیوارە ئاگرینەکەت بە باشی ڕێکخراوە بۆ پاراستنی تۆڕەکەت.'
+                                    : 'Excellent! Your firewall is properly configured to protect your network.'}
+                            </p>
                         </>
                     ) : (
                         <>
                             <i className="fas fa-times-circle"></i>
-                            <p>هەندێک ڕێسای هەڵەت دیاریکردووە. دیوارە ئاگرین پێویستە تەنها پەیوەندیە پارێزراوەکان ڕێگەبدات.</p>
+                            <p>
+                                {language === 'kurdish'
+                                    ? 'هەندێک ڕێسای هەڵەت دیاریکردووە. دیوارە ئاگرین پێویستە تەنها پەیوەندیە پارێزراوەکان ڕێگەبدات.'
+                                    : 'You selected some incorrect rules. A firewall should only allow protected connections.'}
+                            </p>
                         </>
                     )}
                 </div>

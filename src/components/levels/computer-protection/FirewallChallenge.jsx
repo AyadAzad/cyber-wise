@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
+import {useLanguage} from "../../../LanguageContext.jsx";
 
 const FirewallChallenge = ({ completeChallenge }) => {
+    const { language, translations } = useLanguage();
+    const t = translations[language];
+
     const [firewallStatus, setFirewallStatus] = useState({
         incoming: 'medium',
         outgoing: 'low',
@@ -41,14 +45,16 @@ const FirewallChallenge = ({ completeChallenge }) => {
 
     return (
         <div className="challenge-card">
-            <h3>چالاکی ٣: ڕێکخستنی دیوارە ئاگرین</h3>
+            <h3>{language === 'kurdish' ? 'چالاکی ٣: ڕێکخستنی دیوارە ئاگرین' : 'Activity 3: Firewall Configuration'}</h3>
             <p className="instructions">
-                دیوارە ئاگرین یەکێکە لە گرنگترین ئامرازەکانی پاراستنی کۆمپیوتەر. ڕێکخستنەکانی خوارەوە بگۆڕە بۆ پاراستنی باشتر.
+                {language === 'kurdish'
+                    ? 'دیوارە ئاگرین یەکێکە لە گرنگترین ئامرازەکانی پاراستنی کۆمپیوتەر. ڕێکخستنەکانی خوارەوە بگۆڕە بۆ پاراستنی باشتر.'
+                    : 'The firewall is one of the most important computer protection tools. Adjust the settings below for better protection.'}
             </p>
 
             <div className="firewall-settings">
                 <div className="setting-group">
-                    <h4>پاراستنی ناوهات:</h4>
+                    <h4>{language === 'kurdish' ? 'پاراستنی ناوهات:' : 'Incoming Protection:'}</h4>
                     <div className="radio-options">
                         <label>
                             <input
@@ -57,7 +63,7 @@ const FirewallChallenge = ({ completeChallenge }) => {
                                 checked={firewallStatus.incoming === 'high'}
                                 onChange={() => handleSettingChange('incoming', 'high')}
                             />
-                            بەهێز (باشترین پاراستن)
+                            {language === 'kurdish' ? 'بەهێز (باشترین پاراستن)' : 'High (best protection)'}
                         </label>
                         <label>
                             <input
@@ -66,7 +72,7 @@ const FirewallChallenge = ({ completeChallenge }) => {
                                 checked={firewallStatus.incoming === 'medium'}
                                 onChange={() => handleSettingChange('incoming', 'medium')}
                             />
-                            مامناوەند (پاراستنی ناوەندی)
+                            {language === 'kurdish' ? 'مامناوەند (پاراستنی ناوەندی)' : 'Medium (average protection)'}
                         </label>
                         <label>
                             <input
@@ -75,13 +81,13 @@ const FirewallChallenge = ({ completeChallenge }) => {
                                 checked={firewallStatus.incoming === 'low'}
                                 onChange={() => handleSettingChange('incoming', 'low')}
                             />
-                            بەهێز نەبوو (زۆر مەترسیدار)
+                            {language === 'kurdish' ? 'بەهێز نەبوو (زۆر مەترسیدار)' : 'Low (very risky)'}
                         </label>
                     </div>
                 </div>
 
                 <div className="setting-group">
-                    <h4>پاراستنی دەرهات:</h4>
+                    <h4>{language === 'kurdish' ? 'پاراستنی دەرهات:' : 'Outgoing Protection:'}</h4>
                     <div className="radio-options">
                         <label>
                             <input
@@ -90,7 +96,9 @@ const FirewallChallenge = ({ completeChallenge }) => {
                                 checked={firewallStatus.outgoing === 'high'}
                                 onChange={() => handleSettingChange('outgoing', 'high')}
                             />
-                            بەهێز (لەوانەیە هەندێک خاڵی ڕاستەقینە بلۆک بکات)
+                            {language === 'kurdish'
+                                ? 'بەهێز (لەوانەیە هەندێک خاڵی ڕاستەقینە بلۆک بکات)'
+                                : 'High (might block some legitimate traffic)'}
                         </label>
                         <label>
                             <input
@@ -99,7 +107,7 @@ const FirewallChallenge = ({ completeChallenge }) => {
                                 checked={firewallStatus.outgoing === 'medium'}
                                 onChange={() => handleSettingChange('outgoing', 'medium')}
                             />
-                            مامناوەند (باشترین هەڵبژاردە)
+                            {language === 'kurdish' ? 'مامناوەند (باشترین هەڵبژاردە)' : 'Medium (best option)'}
                         </label>
                         <label>
                             <input
@@ -108,13 +116,13 @@ const FirewallChallenge = ({ completeChallenge }) => {
                                 checked={firewallStatus.outgoing === 'low'}
                                 onChange={() => handleSettingChange('outgoing', 'low')}
                             />
-                            بەهێز نەبوو (مەترسیدار)
+                            {language === 'kurdish' ? 'بەهێز نەبوو (مەترسیدار)' : 'Low (risky)'}
                         </label>
                     </div>
                 </div>
 
                 <div className="setting-group">
-                    <h4>ئاگاداریەکان:</h4>
+                    <h4>{language === 'kurdish' ? 'ئاگاداریەکان:' : 'Notifications:'}</h4>
                     <label className="toggle-switch">
                         <input
                             type="checkbox"
@@ -122,13 +130,19 @@ const FirewallChallenge = ({ completeChallenge }) => {
                             onChange={(e) => handleSettingChange('notifications', e.target.checked)}
                         />
                         <span className="slider"></span>
-                        {firewallStatus.notifications ? 'چالاکە' : 'ناچالاکە'}
+                        {firewallStatus.notifications
+                            ? (language === 'kurdish' ? 'چالاکە' : 'Enabled')
+                            : (language === 'kurdish' ? 'ناچالاکە' : 'Disabled')}
                     </label>
-                    <p className="setting-description">ئاگاداریەکان یارمەتیت دەدات بزانیت کەی هێرشێک ڕوویداوە.</p>
+                    <p className="setting-description">
+                        {language === 'kurdish'
+                            ? 'ئاگاداریەکان یارمەتیت دەدات بزانیت کەی هێرشێک ڕوویداوە.'
+                            : 'Notifications help you know when an attack occurs.'}
+                    </p>
                 </div>
 
                 <div className="setting-group">
-                    <h4>نوێکردنەوەی خۆکار:</h4>
+                    <h4>{language === 'kurdish' ? 'نوێکردنەوەی خۆکار:' : 'Auto Update:'}</h4>
                     <label className="toggle-switch">
                         <input
                             type="checkbox"
@@ -136,14 +150,20 @@ const FirewallChallenge = ({ completeChallenge }) => {
                             onChange={(e) => handleSettingChange('autoUpdate', e.target.checked)}
                         />
                         <span className="slider"></span>
-                        {firewallStatus.autoUpdate ? 'چالاکە' : 'ناچالاکە'}
+                        {firewallStatus.autoUpdate
+                            ? (language === 'kurdish' ? 'چالاکە' : 'Enabled')
+                            : (language === 'kurdish' ? 'ناچالاکە' : 'Disabled')}
                     </label>
-                    <p className="setting-description">نوێکردنەوەی خۆکار پاراستنەکەت بە ڕێژە دەکات.</p>
+                    <p className="setting-description">
+                        {language === 'kurdish'
+                            ? 'نوێکردنەوەی خۆکار پاراستنەکەت بە ڕێژە دەکات.'
+                            : 'Auto-updating keeps your protection current.'}
+                    </p>
                 </div>
             </div>
 
             <button className="check-button" onClick={checkSettings}>
-                پشکنینی ڕێکخستنەکان
+                {language === 'kurdish' ? 'پشکنینی ڕێکخستنەکان' : 'Check Settings'}
             </button>
 
             {showFeedback && (
@@ -151,36 +171,66 @@ const FirewallChallenge = ({ completeChallenge }) => {
                     {score >= 75 ? (
                         <>
                             <i className="fas fa-check-circle"></i>
-                            <p>زۆر باش! ڕێکخستنەکانی دیوارە ئاگرینەکەت زۆر پارێزەرانەن.</p>
+                            <p>
+                                {language === 'kurdish'
+                                    ? 'زۆر باش! ڕێکخستنەکانی دیوارە ئاگرینەکەت زۆر پارێزەرانەن.'
+                                    : 'Excellent! Your firewall settings are very secure.'}
+                            </p>
                         </>
                     ) : score >= 50 ? (
                         <>
                             <i className="fas fa-exclamation-triangle"></i>
-                            <p>باشە، بەڵام دەتوانی باشتر بکەیت! هەندێک ڕێکخستن پاراستنی باشتر دەوێت.</p>
+                            <p>
+                                {language === 'kurdish'
+                                    ? 'باشە، بەڵام دەتوانی باشتر بکەیت! هەندێک ڕێکخستن پاراستنی باشتر دەوێت.'
+                                    : 'Good, but you can do better! Some settings need improvement.'}
+                            </p>
                         </>
                     ) : (
                         <>
                             <i className="fas fa-times-circle"></i>
-                            <p>ڕێکخستنەکانی دیوارە ئاگرینەکەت زۆر مەترسیدارن. پێویستە گۆڕانکاری تێدا بکەیت.</p>
+                            <p>
+                                {language === 'kurdish'
+                                    ? 'ڕێکخستنەکانی دیوارە ئاگرینەکەت زۆر مەترسیدارن. پێویستە گۆڕانکاری تێدا بکەیت.'
+                                    : 'Your firewall settings are very risky. You need to make changes.'}
+                            </p>
                         </>
                     )}
-                    <p>کۆی خاڵەکان: {score} لە ١٠٠</p>
+                    <p>
+                        {language === 'kurdish' ? 'کۆی خاڵەکان: ' : 'Total score: '}{score} {language === 'kurdish' ? 'لە ١٠٠' : 'out of 100'}
+                    </p>
 
                     {score < 100 && (
                         <div className="recommendations">
-                            <h5>پێشنیارەکان:</h5>
+                            <h5>{language === 'kurdish' ? 'پێشنیارەکان:' : 'Recommendations:'}</h5>
                             <ul>
                                 {firewallStatus.incoming !== optimalSettings.incoming && (
-                                    <li>پاراستنی ناوهات بگۆڕە بۆ "بەهێز"</li>
+                                    <li>
+                                        {language === 'kurdish'
+                                            ? 'پاراستنی ناوهات بگۆڕە بۆ "بەهێز"'
+                                            : 'Change incoming protection to "High"'}
+                                    </li>
                                 )}
                                 {firewallStatus.outgoing !== optimalSettings.outgoing && (
-                                    <li>پاراستنی دەرهات بگۆڕە بۆ "مامناوەند"</li>
+                                    <li>
+                                        {language === 'kurdish'
+                                            ? 'پاراستنی دەرهات بگۆڕە بۆ "مامناوەند"'
+                                            : 'Change outgoing protection to "Medium"'}
+                                    </li>
                                 )}
                                 {firewallStatus.notifications !== optimalSettings.notifications && (
-                                    <li>ئاگاداریەکان چالاک بکە</li>
+                                    <li>
+                                        {language === 'kurdish'
+                                            ? 'ئاگاداریەکان چالاک بکە'
+                                            : 'Enable notifications'}
+                                    </li>
                                 )}
                                 {firewallStatus.autoUpdate !== optimalSettings.autoUpdate && (
-                                    <li>نوێکردنەوەی خۆکار چالاک بکە</li>
+                                    <li>
+                                        {language === 'kurdish'
+                                            ? 'نوێکردنەوەی خۆکار چالاک بکە'
+                                            : 'Enable auto-update'}
+                                    </li>
                                 )}
                             </ul>
                         </div>

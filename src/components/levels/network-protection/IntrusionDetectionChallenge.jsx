@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
+import {useLanguage} from "../../../LanguageContext.jsx";
 
 const IntrusionDetectionChallenge = ({ completeChallenge }) => {
+    const { language, translations } = useLanguage();
+    const t = translations[language];
+
     const [selectedResponse, setSelectedResponse] = useState(null);
     const [showFeedback, setShowFeedback] = useState(false);
     const [currentAlert, setCurrentAlert] = useState(0);
@@ -8,29 +12,89 @@ const IntrusionDetectionChallenge = ({ completeChallenge }) => {
     const alerts = [
         {
             id: 1,
-            description: "سیستەمەکەت ڕاپۆرتی دەدات کە هەوڵێک هەیە بۆ چوونەژوورەوەی نەناسراو لە ڕێگەی پۆرتی SSH",
+            description: language === 'kurdish'
+                ? "سیستەمەکەت ڕاپۆرتی دەدات کە هەوڵێک هەیە بۆ چوونەژوورەوەی نەناسراو لە ڕێگەی پۆرتی SSH"
+                : "Your system reports an attempted unauthorized login via SSH port",
             responses: [
-                { id: 1, text: "پۆرتی SSH دابخەین و پەیوەندی بە بەڕێوەبەری تۆڕ بکەین", correct: true },
-                { id: 2, text: "هیچ نەکەین چونکە لەوانەیە هەڵە بێت", correct: false },
-                { id: 3, text: "وشەی نهێنی SSH بگۆڕین بۆ وشەیەکی سادەتر", correct: false }
+                {
+                    id: 1,
+                    text: language === 'kurdish'
+                        ? "پۆرتی SSH دابخەین و پەیوەندی بە بەڕێوەبەری تۆڕ بکەین"
+                        : "Close SSH port and contact network administrator",
+                    correct: true
+                },
+                {
+                    id: 2,
+                    text: language === 'kurdish'
+                        ? "هیچ نەکەین چونکە لەوانەیە هەڵە بێت"
+                        : "Do nothing as it might be a false alarm",
+                    correct: false
+                },
+                {
+                    id: 3,
+                    text: language === 'kurdish'
+                        ? "وشەی نهێنی SSH بگۆڕین بۆ وشەیەکی سادەتر"
+                        : "Change SSH password to a simpler one",
+                    correct: false
+                }
             ]
         },
         {
             id: 2,
-            description: "دەرگایەکی پاشەکەوت (backdoor) دۆزراوەتەوە لە یەکێک لە کۆمپیوتەرەکانی تۆڕ",
+            description: language === 'kurdish'
+                ? "دەرگایەکی پاشەکەوت (backdoor) دۆزراوەتەوە لە یەکێک لە کۆمپیوتەرەکانی تۆڕ"
+                : "A backdoor has been detected on one of your network computers",
             responses: [
-                { id: 1, text: "کۆمپیوتەرەکە جیا بکەینەوە لە تۆڕەکە و پشکنینی بکەین", correct: true },
-                { id: 2, text: "هیچ نەکەین چونکە بێ زیانە", correct: false },
-                { id: 3, text: "هەموو کۆمپیوتەرەکان ڕیستارت بکەین", correct: false }
+                {
+                    id: 1,
+                    text: language === 'kurdish'
+                        ? "کۆمپیوتەرەکە جیا بکەینەوە لە تۆڕەکە و پشکنینی بکەین"
+                        : "Isolate the computer from the network and investigate",
+                    correct: true
+                },
+                {
+                    id: 2,
+                    text: language === 'kurdish'
+                        ? "هیچ نەکەین چونکە بێ زیانە"
+                        : "Do nothing as it's harmless",
+                    correct: false
+                },
+                {
+                    id: 3,
+                    text: language === 'kurdish'
+                        ? "هەموو کۆمپیوتەرەکان ڕیستارت بکەین"
+                        : "Restart all computers",
+                    correct: false
+                }
             ]
         },
         {
             id: 3,
-            description: "چەندین هەوڵی چوونەژوورەوەی شکستخواردوو هەیە لە کۆمپیوتەری سەرەوە",
+            description: language === 'kurdish'
+                ? "چەندین هەوڵی چوونەژوورەوەی شکستخواردوو هەیە لە کۆمپیوتەری سەرەوە"
+                : "Multiple failed login attempts detected on your server",
             responses: [
-                { id: 1, text: "IP ناونیشانە بلۆککراوەکان ڕێکبخەین لە دیوارە ئاگرین", correct: true },
-                { id: 2, text: "هیچ نەکەین چونکە شکستیان هێناوە", correct: false },
-                { id: 3, text: "کۆمپیوتەرەکە لەکاربخەین", correct: false }
+                {
+                    id: 1,
+                    text: language === 'kurdish'
+                        ? "IP ناونیشانە بلۆککراوەکان ڕێکبخەین لە دیوارە ئاگرین"
+                        : "Configure blocked IP addresses in the firewall",
+                    correct: true
+                },
+                {
+                    id: 2,
+                    text: language === 'kurdish'
+                        ? "هیچ نەکەین چونکە شکستیان هێناوە"
+                        : "Do nothing since they failed",
+                    correct: false
+                },
+                {
+                    id: 3,
+                    text: language === 'kurdish'
+                        ? "کۆمپیوتەرەکە لەکاربخەین"
+                        : "Shut down the computer",
+                    correct: false
+                }
             ]
         }
     ];
@@ -55,13 +119,15 @@ const IntrusionDetectionChallenge = ({ completeChallenge }) => {
 
     return (
         <div className="challenge-card">
-            <h3>چالاکی ٣: دۆزینەوەی هێرش</h3>
+            <h3>{language === 'kurdish' ? 'چالاکی ٣: دۆزینەوەی هێرش' : 'Activity 3: Intrusion Detection'}</h3>
             <div className="alert-indicator">
-                ڕاپۆرت {currentAlert + 1} لە {alerts.length}
+                {language === 'kurdish'
+                    ? `ڕاپۆرت ${currentAlert + 1} لە ${alerts.length}`
+                    : `Alert ${currentAlert + 1} of ${alerts.length}`}
             </div>
 
             <div className="scenario-box alert-box">
-                <h4>ئاگاداری:</h4>
+                <h4>{language === 'kurdish' ? 'ئاگاداری:' : 'Alert:'}</h4>
                 <p>{alerts[currentAlert].description}</p>
             </div>
 
@@ -87,12 +153,20 @@ const IntrusionDetectionChallenge = ({ completeChallenge }) => {
                     {alerts[currentAlert].responses.find(r => r.id === selectedResponse)?.correct ? (
                         <>
                             <i className="fas fa-check-circle"></i>
-                            <p>وەڵامێکی دروستە! ئەم کارە پاراستنی تۆڕەکەت زیاد دەکات.</p>
+                            <p>
+                                {language === 'kurdish'
+                                    ? 'وەڵامێکی دروستە! ئەم کارە پاراستنی تۆڕەکەت زیاد دەکات.'
+                                    : 'Correct response! This action enhances your network security.'}
+                            </p>
                         </>
                     ) : (
                         <>
                             <i className="fas fa-times-circle"></i>
-                            <p>وەڵامێکی هەڵەە! ئەم کارە مەترسیدارە بۆ تۆڕەکەت.</p>
+                            <p>
+                                {language === 'kurdish'
+                                    ? 'وەڵامێکی هەڵەە! ئەم کارە مەترسیدارە بۆ تۆڕەکەت.'
+                                    : 'Incorrect response! This action could endanger your network.'}
+                            </p>
                         </>
                     )}
                 </div>

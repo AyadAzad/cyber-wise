@@ -1,12 +1,14 @@
-// DataMasterFinalModal.js
 import React from 'react';
+import {useLanguage} from "../../../LanguageContext.jsx";
 
 const DataMasterFinalModal = ({ score, onClose }) => {
+    const { language } = useLanguage();
+
     const getRank = () => {
-        if (score >= 180) return "زانای زانیاری";
-        if (score >= 150) return "پیشەگەری ئاسایشی سایبەری";
-        if (score >= 120) return "پارێزەری زانیاری";
-        return "فێرخوازی ئاسایشی سایبەری";
+        if (score >= 180) return language === 'kurdish' ? "زانای زانیاری" : "Data Master";
+        if (score >= 150) return language === 'kurdish' ? "پیشەگەری ئاسایشی سایبەری" : "Cyber Security Professional";
+        if (score >= 120) return language === 'kurdish' ? "پارێزەری زانیاری" : "Data Guardian";
+        return language === 'kurdish' ? "فێرخوازی ئاسایشی سایبەری" : "Cyber Security Apprentice";
     };
 
     return (
@@ -14,14 +16,22 @@ const DataMasterFinalModal = ({ score, onClose }) => {
             <div className="final-modal">
                 <div className="modal-header master">
                     <i className="fas fa-graduation-cap"></i>
-                    <h3>پیرۆزە! ئاستی کۆتایی تەواو کرد</h3>
+                    <h3>{language === 'kurdish' ? "پیرۆزە! ئاستی کۆتایی تەواو کرد" : "Congratulations! You've completed the final level"}</h3>
                 </div>
                 <div className="modal-body">
-                    <p>تۆ ئێستا بە فەرمی ناسێنەرایەتیت وەک {getRank()} کرا!</p>
+                    <p>
+                        {language === 'kurdish'
+                            ? `تۆ ئێستا بە فەرمی ناسێنەرایەتیت وەک ${getRank()} کرا!`
+                            : `You are now officially certified as a ${getRank()}!`}
+                    </p>
 
                     <div className="score-display master">
                         <i className="fas fa-shield-alt"></i>
-                        <span>کۆی گشتی خاڵەکان: {score} لە ٢٠٠</span>
+                        <span>
+                            {language === 'kurdish'
+                                ? `کۆی گشتی خاڵەکان: ${score} لە ٢٠٠`
+                                : `Total score: ${score} out of 200`}
+                        </span>
                     </div>
 
                     <div className="rank-badge">
@@ -30,20 +40,40 @@ const DataMasterFinalModal = ({ score, onClose }) => {
                         </div>
                         <div className="badge-text">
                             <h4>{getRank()}</h4>
-                            <p>ئاستی ئاسایشی سایبەری: {Math.floor((score / 200) * 100)}%</p>
+                            <p>
+                                {language === 'kurdish'
+                                    ? `ئاستی ئاسایشی سایبەری: ${Math.floor((score / 200) * 100)}%`
+                                    : `Cyber Security Level: ${Math.floor((score / 200) * 100)}%`}
+                            </p>
                         </div>
                     </div>
 
                     <ul className="master-skills">
-                        <li><i className="fas fa-check"></i> ناسینەوەی شکاندنی زانیاری</li>
-                        <li><i className="fas fa-check"></i> پاراستنی زانیاری بە شێوازی نوێنەرایەتی</li>
-                        <li><i className="fas fa-check"></i> ئاسایشی API و کۆد نووسین</li>
-                        <li><i className="fas fa-check"></i> زانستێکی گشتی لەسەر پاراستنی زانیاری</li>
+                        <li><i className="fas fa-check"></i>
+                            {language === 'kurdish'
+                                ? "ناسینەوەی شکاندنی زانیاری"
+                                : "Identifying data breaches"}
+                        </li>
+                        <li><i className="fas fa-check"></i>
+                            {language === 'kurdish'
+                                ? "پاراستنی زانیاری بە شێوازی نوێنەرایەتی"
+                                : "Protecting data with best practices"}
+                        </li>
+                        <li><i className="fas fa-check"></i>
+                            {language === 'kurdish'
+                                ? "ئاسایشی API و کۆد نووسین"
+                                : "API security and secure coding"}
+                        </li>
+                        <li><i className="fas fa-check"></i>
+                            {language === 'kurdish'
+                                ? "زانستێکی گشتی لەسەر پاراستنی زانیاری"
+                                : "Comprehensive knowledge of data protection"}
+                        </li>
                     </ul>
                 </div>
                 <div className="modal-footer">
                     <button className="btn-master" onClick={onClose}>
-                        کۆتایی هێنان
+                        {language === 'kurdish' ? "کۆتایی هێنان" : "Finish"}
                     </button>
                 </div>
             </div>

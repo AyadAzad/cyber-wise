@@ -1,7 +1,10 @@
-// FinalExam.js
 import React, { useState } from 'react';
+import {useLanguage} from "../../../LanguageContext.jsx";
 
 const FinalExam = ({ completeChallenge }) => {
+    const { language, translations } = useLanguage();
+    const t = translations[language];
+
     const [answers, setAnswers] = useState({});
     const [submitted, setSubmitted] = useState(false);
     const [score, setScore] = useState(0);
@@ -9,39 +12,87 @@ const FinalExam = ({ completeChallenge }) => {
     const questions = [
         {
             id: 1,
-            question: "کام لەم ڕێگایانە باشترینە بۆ پاراستنی زانیاری کەسی لە کاتی بەکارهێنانی وای-فای گشتی؟",
+            question: language === 'kurdish'
+                ? "کام لەم ڕێگایانە باشترینە بۆ پاراستنی زانیاری کەسی لە کاتی بەکارهێنانی وای-فای گشتی؟"
+                : "Which of these is the best way to protect personal information when using public WiFi?",
             options: [
-                { id: 1, text: "بەکارهێنانی VPN" },
-                { id: 2, text: "بەکارهێنانی HTTPS لە هەموو ماڵپەڕەکان" },
-                { id: 3, text: "هیچ کردارێکی حیساب و تایبەت نەکەیت" },
-                { id: 4, text: "هەموویان" }
+                {
+                    id: 1,
+                    text: language === 'kurdish' ? "بەکارهێنانی VPN" : "Using a VPN"
+                },
+                {
+                    id: 2,
+                    text: language === 'kurdish' ? "بەکارهێنانی HTTPS لە هەموو ماڵپەڕەکان" : "Using HTTPS on all websites"
+                },
+                {
+                    id: 3,
+                    text: language === 'kurdish' ? "هیچ کردارێکی حیساب و تایبەت نەکەیت" : "Avoiding any private activities"
+                },
+                {
+                    id: 4,
+                    text: language === 'kurdish' ? "هەموویان" : "All of the above"
+                }
             ],
             correct: 4,
-            explanation: "لە کاتی بەکارهێنانی وای-فای گشتی، باشترین ڕێگا بریتییە لە بەکارهێنانی VPN و HTTPS و خۆپاراستن لە کردارە حیسابەکان."
+            explanation: language === 'kurdish'
+                ? "لە کاتی بەکارهێنانی وای-فای گشتی، باشترین ڕێگا بریتییە لە بەکارهێنانی VPN و HTTPS و خۆپاراستن لە کردارە حیسابەکان."
+                : "When using public WiFi, the best approach is using VPN, HTTPS, and avoiding sensitive activities."
         },
         {
             id: 2,
-            question: "ئەگەر گومانت هەیە کە هەژمارەکەت لەلایەن کەسێکی ترەوە بەکارهێنراوە، چی دەکەیت؟",
+            question: language === 'kurdish'
+                ? "ئەگەر گومانت هەیە کە هەژمارەکەت لەلایەن کەسێکی ترەوە بەکارهێنراوە، چی دەکەیت؟"
+                : "If you suspect your account has been compromised, what should you do?",
             options: [
-                { id: 1, text: "وشەی نهێنیەکە دەگۆڕم" },
-                { id: 2, text: "پەیوەندی بە خزمەتگوزاریەکە دەکەم و ڕاپۆرت دەدەم" },
-                { id: 3, text: "هەموو هەژمارەکانم دەگۆڕم کە هەمان وشەی نهێنییان هەیە" },
-                { id: 4, text: "هەموویان" }
+                {
+                    id: 1,
+                    text: language === 'kurdish' ? "وشەی نهێنیەکە دەگۆڕم" : "Change the password"
+                },
+                {
+                    id: 2,
+                    text: language === 'kurdish' ? "پەیوەندی بە خزمەتگوزاریەکە دەکەم و ڕاپۆرت دەدەم" : "Contact the service and report it"
+                },
+                {
+                    id: 3,
+                    text: language === 'kurdish' ? "هەموو هەژمارەکانم دەگۆڕم کە هەمان وشەی نهێنییان هەیە" : "Change all accounts with the same password"
+                },
+                {
+                    id: 4,
+                    text: language === 'kurdish' ? "هەموویان" : "All of the above"
+                }
             ],
             correct: 4,
-            explanation: "پێویستە هەموو ئەم کردارانە ئەنجام بدەیت بۆ پاراستنی هەژمارەکەت."
+            explanation: language === 'kurdish'
+                ? "پێویستە هەموو ئەم کردارانە ئەنجام بدەیت بۆ پاراستنی هەژمارەکەت."
+                : "You should perform all these actions to secure your account."
         },
         {
             id: 3,
-            question: "کام لەمە باشترین ڕێگایە بۆ پاراستنی زانیاری لە کۆمپانیایەک؟",
+            question: language === 'kurdish'
+                ? "کام لەمە باشترین ڕێگایە بۆ پاراستنی زانیاری لە کۆمپانیایەک؟"
+                : "Which of these is the best approach for data protection in a company?",
             options: [
-                { id: 1, text: "پەروەردەکردنی کارمەندان لەسەر ئاسایشی زانیاری" },
-                { id: 2, text: "بەکارهێنانی نەرمەکاڵای پاراستن" },
-                { id: 3, text: "پالیسی بەهێزی پاراستنی زانیاری" },
-                { id: 4, text: "هەموویان" }
+                {
+                    id: 1,
+                    text: language === 'kurdish' ? "پەروەردەکردنی کارمەندان لەسەر ئاسایشی زانیاری" : "Employee training on information security"
+                },
+                {
+                    id: 2,
+                    text: language === 'kurdish' ? "بەکارهێنانی نەرمەکاڵای پاراستن" : "Using protection software"
+                },
+                {
+                    id: 3,
+                    text: language === 'kurdish' ? "پالیسی بەهێزی پاراستنی زانیاری" : "Strong data protection policies"
+                },
+                {
+                    id: 4,
+                    text: language === 'kurdish' ? "هەموویان" : "All of the above"
+                }
             ],
             correct: 4,
-            explanation: "پاراستنی زانیاری پێویستی بە هەموو ئەم ڕێگایانە هەیە بۆ کاریگەری."
+            explanation: language === 'kurdish'
+                ? "پاراستنی زانیاری پێویستی بە هەموو ئەم ڕێگایانە هەیە بۆ کاریگەری."
+                : "Data protection requires all these approaches for effectiveness."
         }
     ];
 
@@ -67,8 +118,10 @@ const FinalExam = ({ completeChallenge }) => {
 
     return (
         <div className="challenge-card">
-            <h3>تاقیکردنەوەی کۆتایی</h3>
-            <p className="instructions">وەڵامی هەموو پرسیارەکان بدەوە</p>
+            <h3>{language === 'kurdish' ? 'تاقیکردنەوەی کۆتایی' : 'Final Exam'}</h3>
+            <p className="instructions">
+                {language === 'kurdish' ? 'وەڵامی هەموو پرسیارەکان بدەوە' : 'Answer all the questions'}
+            </p>
 
             {!submitted ? (
                 <>
@@ -100,23 +153,28 @@ const FinalExam = ({ completeChallenge }) => {
                         onClick={calculateScore}
                         disabled={Object.keys(answers).length < questions.length}
                     >
-                        کۆتایی هێنان
+                        {language === 'kurdish' ? 'کۆتایی هێنان' : 'Submit'}
                     </button>
                 </>
             ) : (
                 <div className="feedback">
-                    <h4>ئەنجامەکان:</h4>
+                    <h4>{language === 'kurdish' ? 'ئەنجامەکان:' : 'Results:'}</h4>
                     <div className="score-display">
-                        خاڵەکان: {score} لە ٥٠
+                        {language === 'kurdish' ? `خاڵەکان: ${score} لە ٥٠` : `Score: ${score} out of 50`}
                     </div>
 
                     {questions.map(q => (
                         <div key={q.id} className="question-result">
                             <p>{q.question}</p>
                             <p className={answers[q.id] === q.correct ? 'correct-answer' : 'wrong-answer'}>
-                                وەڵامی تۆ: {q.options.find(o => o.id === answers[q.id])?.text}
+                                {language === 'kurdish' ? 'وەڵامی تۆ: ' : 'Your answer: '}
+                                {q.options.find(o => o.id === answers[q.id])?.text}
                                 {answers[q.id] !== q.correct && (
-                                    <span> (وەڵامی ڕاست: {q.options.find(o => o.id === q.correct)?.text})</span>
+                                    <span>
+                                        {language === 'kurdish'
+                                            ? ` (وەڵامی ڕاست: ${q.options.find(o => o.id === q.correct)?.text})`
+                                            : ` (Correct answer: ${q.options.find(o => o.id === q.correct)?.text})`}
+                                    </span>
                                 )}
                             </p>
                             <p className="explanation">{q.explanation}</p>

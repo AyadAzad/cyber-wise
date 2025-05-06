@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
+import {useLanguage} from "../../../LanguageContext.jsx";
 
 const UrlAnalysisChallenge = ({ completeChallenge }) => {
+    const { language, translations } = useLanguage();
+    const t = translations[language];
+
     const [selectedUrls, setSelectedUrls] = useState([]);
     const [showFeedback, setShowFeedback] = useState(false);
     const [currentStep, setCurrentStep] = useState(1);
@@ -15,12 +19,48 @@ const UrlAnalysisChallenge = ({ completeChallenge }) => {
     ];
 
     const urlFeatures = [
-        { id: 1, feature: "پێشگرەی HTTPS لە جیاتی HTTP", correct: true },
-        { id: 2, feature: "ناونیشانی دروست و ڕێک (نەک چەند خاڵی زۆر)", correct: true },
-        { id: 3, feature: "پاشگرەی وڵات (وەک .com .org .net)", correct: true },
-        { id: 4, feature: "لینکی کورتکراوە (وەک bit.ly)", correct: false },
-        { id: 5, feature: "پارامیتەری زۆر لە ناونیشاندا", correct: false },
-        { id: 6, feature: "ناوی ناسراو و فەرمی کۆمپانیا", correct: true }
+        {
+            id: 1,
+            feature: language === 'kurdish'
+                ? "پێشگرەی HTTPS لە جیاتی HTTP"
+                : "HTTPS prefix instead of HTTP",
+            correct: true
+        },
+        {
+            id: 2,
+            feature: language === 'kurdish'
+                ? "ناونیشانی دروست و ڕێک (نەک چەند خاڵی زۆر)"
+                : "Proper and clean address (not many dots)",
+            correct: true
+        },
+        {
+            id: 3,
+            feature: language === 'kurdish'
+                ? "پاشگرەی وڵات (وەک .com .org .net)"
+                : "Country suffix (like .com .org .net)",
+            correct: true
+        },
+        {
+            id: 4,
+            feature: language === 'kurdish'
+                ? "لینکی کورتکراوە (وەک bit.ly)"
+                : "Shortened link (like bit.ly)",
+            correct: false
+        },
+        {
+            id: 5,
+            feature: language === 'kurdish'
+                ? "پارامیتەری زۆر لە ناونیشاندا"
+                : "Many parameters in the address",
+            correct: false
+        },
+        {
+            id: 6,
+            feature: language === 'kurdish'
+                ? "ناوی ناسراو و فەرمی کۆمپانیا"
+                : "Known and official company name",
+            correct: true
+        }
     ];
 
     const toggleUrlSelection = (id) => {
@@ -54,11 +94,15 @@ const UrlAnalysisChallenge = ({ completeChallenge }) => {
 
     return (
         <div className="challenge-card">
-            <h3>چالاکی ١: شیکردنەوەی ناونیشانی وێب</h3>
+            <h3>{language === 'kurdish' ? 'چالاکی ١: شیکردنەوەی ناونیشانی وێب' : 'Activity 1: URL Analysis'}</h3>
 
             {currentStep === 1 ? (
                 <>
-                    <p className="instructions">کامیان لەم ناونیشانانە سەلامەتن؟ (هەمووی دیاری بکە)</p>
+                    <p className="instructions">
+                        {language === 'kurdish'
+                            ? 'کامیان لەم ناونیشانانە سەلامەتن؟ (هەمووی دیاری بکە)'
+                            : 'Which of these URLs are safe? (Select all)'}
+                    </p>
 
                     <div className="url-grid">
                         {urlExamples.map(example => (
@@ -70,7 +114,9 @@ const UrlAnalysisChallenge = ({ completeChallenge }) => {
                                 <div className="url-text">{example.url}</div>
                                 <div className={`url-status ${example.safe ? 'safe' : 'unsafe'}`}>
                                     {selectedUrls.includes(example.id) ? (
-                                        example.safe ? 'سەلامەت' : 'مەترسیدار'
+                                        example.safe
+                                            ? language === 'kurdish' ? 'سەلامەت' : 'Safe'
+                                            : language === 'kurdish' ? 'مەترسیدار' : 'Dangerous'
                                     ) : '‌'}
                                 </div>
                             </div>
@@ -82,7 +128,7 @@ const UrlAnalysisChallenge = ({ completeChallenge }) => {
                         onClick={checkUrlAnswers}
                         disabled={selectedUrls.length === 0}
                     >
-                        پشکنین
+                        {language === 'kurdish' ? 'پشکنین' : 'Check'}
                     </button>
 
                     {showFeedback && (
@@ -95,12 +141,20 @@ const UrlAnalysisChallenge = ({ completeChallenge }) => {
                                 (!example.safe && !selectedUrls.includes(example.id)) ? (
                                     <>
                                         <i className="fas fa-check-circle"></i>
-                                        <p>زۆر باش! تۆ بە سەرکەوتوویی ناونیشانی سەلامەتت ناسیەوە.</p>
+                                        <p>
+                                            {language === 'kurdish'
+                                                ? 'زۆر باش! تۆ بە سەرکەوتوویی ناونیشانی سەلامەتت ناسیەوە.'
+                                                : 'Very good! You successfully identified the safe URLs.'}
+                                        </p>
                                     </>
                                 ) : (
                                     <>
                                         <i className="fas fa-times-circle"></i>
-                                        <p>هەندێک هەڵەت کردووە. لەبیرت بێت ناونیشانی سەلامەت پێویستی بە HTTPS هەیە و ناوی ڕێک و فەرمی.</p>
+                                        <p>
+                                            {language === 'kurdish'
+                                                ? 'هەندێک هەڵەت کردووە. لەبیرت بێت ناونیشانی سەلامەت پێویستی بە HTTPS هەیە و ناوی ڕێک و فەرمی.'
+                                                : 'You made some mistakes. Remember that safe URLs need HTTPS and proper, official names.'}
+                                        </p>
                                     </>
                                 ))}
                         </div>
@@ -110,13 +164,14 @@ const UrlAnalysisChallenge = ({ completeChallenge }) => {
                 <FeatureIdentification
                     features={urlFeatures}
                     onComplete={checkFeatureAnswers}
+                    language={language}
                 />
             )}
         </div>
     );
 };
 
-const FeatureIdentification = ({ features, onComplete }) => {
+const FeatureIdentification = ({ features, onComplete, language }) => {
     const [selectedFeatures, setSelectedFeatures] = useState([]);
 
     const toggleFeature = (id) => {
@@ -129,7 +184,11 @@ const FeatureIdentification = ({ features, onComplete }) => {
 
     return (
         <>
-            <p className="instructions">کامیان لەم تایبەتمەندیانە نیشانەکانی ناونیشانی سەلامەتن؟</p>
+            <p className="instructions">
+                {language === 'kurdish'
+                    ? 'کامیان لەم تایبەتمەندیانە نیشانەکانی ناونیشانی سەلامەتن؟'
+                    : 'Which of these features indicate a safe URL?'}
+            </p>
 
             <div className="features-list">
                 {features.map(feature => (
@@ -153,7 +212,7 @@ const FeatureIdentification = ({ features, onComplete }) => {
                 onClick={() => onComplete(selectedFeatures)}
                 disabled={selectedFeatures.length === 0}
             >
-                تەواوکردن
+                {language === 'kurdish' ? 'تەواوکردن' : 'Complete'}
             </button>
         </>
     );

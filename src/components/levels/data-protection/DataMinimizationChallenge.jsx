@@ -1,18 +1,78 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
+import { useLanguage } from "../../../LanguageContext.jsx";
 
 const DataMinimizationChallenge = ({ completeChallenge }) => {
+    const { language, translations } = useLanguage();
+    const t = translations[language];
+
     const [selectedFields, setSelectedFields] = useState([]);
     const [showFeedback, setShowFeedback] = useState(false);
 
     const formFields = [
-        { id: 1, field: "ناو", required: true, reason: "پێویستە بۆ ناسینەوەی بەکارهێنەر" },
-        { id: 2, field: "ناوی باوک", required: false, reason: "تەنها لە کاتی پێویست داوا بکرێت" },
-        { id: 3, field: "ژمارەی تەلەفۆنی باوک", required: false, reason: "زانیاری زۆرە و پێویست نییە" },
-        { id: 4, field: "ناونیشانی تەواو", required: false, reason: "تەنها لە کاتی ناردنی کاڵا داوا بکرێت" },
-        { id: 5, field: "پۆستی ئەلیکترۆنی", required: true, reason: "پێویستە بۆ پەیوەندی کردن" },
-        { id: 6, field: "بەرواری لەدایکبوون", required: false, reason: "تەنها لە کاتی پێویست داوا بکرێت" },
-        { id: 7, field: "ژمارەی نەستە", required: false, reason: "زانیاری زۆرە و پێویست نییە" },
-        { id: 8, field: "نەخۆشی خوێی", required: false, reason: "زانیاری حەساسە و پێویست نییە" }
+        {
+            id: 1,
+            field: language === 'kurdish' ? "ناو" : "Name",
+            required: true,
+            reason: language === 'kurdish'
+                ? "پێویستە بۆ ناسینەوەی بەکارهێنەر"
+                : "Required for user identification"
+        },
+        {
+            id: 2,
+            field: language === 'kurdish' ? "ناوی باوک" : "Father's name",
+            required: false,
+            reason: language === 'kurdish'
+                ? "تەنها لە کاتی پێویست داوا بکرێت"
+                : "Should only be requested when necessary"
+        },
+        {
+            id: 3,
+            field: language === 'kurdish' ? "ژمارەی تەلەفۆنی باوک" : "Father's phone number",
+            required: false,
+            reason: language === 'kurdish'
+                ? "زانیاری زۆرە و پێویست نییە"
+                : "Too much information and not necessary"
+        },
+        {
+            id: 4,
+            field: language === 'kurdish' ? "ناونیشانی تەواو" : "Full address",
+            required: false,
+            reason: language === 'kurdish'
+                ? "تەنها لە کاتی ناردنی کاڵا داوا بکرێت"
+                : "Should only be requested for product delivery"
+        },
+        {
+            id: 5,
+            field: language === 'kurdish' ? "پۆستی ئەلیکترۆنی" : "Email",
+            required: true,
+            reason: language === 'kurdish'
+                ? "پێویستە بۆ پەیوەندی کردن"
+                : "Required for communication"
+        },
+        {
+            id: 6,
+            field: language === 'kurdish' ? "بەرواری لەدایکبوون" : "Date of birth",
+            required: false,
+            reason: language === 'kurdish'
+                ? "تەنها لە کاتی پێویست داوا بکرێت"
+                : "Should only be requested when necessary"
+        },
+        {
+            id: 7,
+            field: language === 'kurdish' ? "ژمارەی نەستە" : "Wrist size",
+            required: false,
+            reason: language === 'kurdish'
+                ? "زانیاری زۆرە و پێویست نییە"
+                : "Too much information and not necessary"
+        },
+        {
+            id: 8,
+            field: language === 'kurdish' ? "نەخۆشی خوێی" : "Blood disease",
+            required: false,
+            reason: language === 'kurdish'
+                ? "زانیاری حەساسە و پێویست نییە"
+                : "Sensitive information and not necessary"
+        }
     ];
 
     const toggleSelection = (id) => {
@@ -44,9 +104,15 @@ const DataMinimizationChallenge = ({ completeChallenge }) => {
 
     return (
         <div className="challenge-card">
-            <h3>چالاکی ١: کەمکردنەوەی زانیاری (Data Minimization)</h3>
+            <h3>
+                {language === 'kurdish'
+                    ? 'چالاکی ١: کەمکردنەوەی زانیاری (Data Minimization)'
+                    : 'Activity 1: Data Minimization'}
+            </h3>
             <p className="instructions">
-                تۆ بەڕێوەبەری پڕۆژەیەکی نوێیت کە پێویستە فۆرمێکی تۆمارکردن دروست بکەیت. تەنها خانە پێویستەکان دیاری بکە:
+                {language === 'kurdish'
+                    ? "تۆ بەڕێوەبەری پڕۆژەیەکی نوێیت کە پێویستە فۆرمێکی تۆمارکردن دروست بکەیت. تەنها خانە پێویستەکان دیاری بکە:"
+                    : "You're managing a new project that requires creating a registration form. Select only the necessary fields:"}
             </p>
 
             <div className="fields-grid">
@@ -70,7 +136,7 @@ const DataMinimizationChallenge = ({ completeChallenge }) => {
             </div>
 
             <button className="check-button" onClick={checkAnswers}>
-                پشکنین
+                {language === 'kurdish' ? 'پشکنین' : 'Check'}
             </button>
 
             {showFeedback && (
@@ -82,15 +148,23 @@ const DataMinimizationChallenge = ({ completeChallenge }) => {
                     selectedFields.every(id => formFields.find(f => f.id === id).required) ? (
                         <>
                             <i className="fas fa-check-circle"></i>
-                            <p>زۆر باش! تەنها خانە پێویستەکانت دیاری کردووە. ئەمە ڕێگایەکی باشە بۆ کەمکردنەوەی مەترسی لەبارەی زانیاری کەسی.</p>
+                            <p>
+                                {language === 'kurdish'
+                                    ? "زۆر باش! تەنها خانە پێویستەکانت دیاری کردووە. ئەمە ڕێگایەکی باشە بۆ کەمکردنەوەی مەترسی لەبارەی زانیاری کەسی."
+                                    : "Excellent! You've selected only the necessary fields. This is a good practice for minimizing personal data risks."}
+                            </p>
                         </>
                     ) : (
                         <>
                             <i className="fas fa-info-circle"></i>
                             <p>
                                 {selectedFields.some(id => !formFields.find(f => f.id === id).required) ?
-                                    "هەندێک لە خانەکان کە دیاریت کردوون پێویست نین. لەبیرت بێت کە کەمترین زانیاری کەسی کۆبکەیتەوە." :
-                                    "هەندێک لە خانە پێویستەکانت دیاری نەکردووە. دڵنیابە لەوەی کە هەموو زانیاریە پێویستەکان کۆبکەیتەوە."}
+                                    (language === 'kurdish'
+                                        ? "هەندێک لە خانەکان کە دیاریت کردوون پێویست نین. لەبیرت بێت کە کەمترین زانیاری کەسی کۆبکەیتەوە."
+                                        : "Some fields you selected aren't necessary. Remember to collect the minimum personal data.") :
+                                    (language === 'kurdish'
+                                        ? "هەندێک لە خانە پێویستەکانت دیاری نەکردووە. دڵنیابە لەوەی کە هەموو زانیاریە پێویستەکان کۆبکەیتەوە."
+                                        : "You missed some required fields. Make sure to collect all necessary information.")}
                             </p>
                         </>
                     )}
@@ -100,4 +174,4 @@ const DataMinimizationChallenge = ({ completeChallenge }) => {
     );
 };
 
-export default DataMinimizationChallenge
+export default DataMinimizationChallenge;

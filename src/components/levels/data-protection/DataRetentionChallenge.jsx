@@ -1,20 +1,54 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
+import { useLanguage } from "../../../LanguageContext.jsx";
 
 const DataRetentionChallenge = ({ completeChallenge }) => {
+    const { language, translations } = useLanguage();
+    const t = translations[language];
+
     const [dragItems, setDragItems] = useState([
-        { id: 1, text: "زانیاری کارمەندانی پێشوو", category: null, correct: "delete" },
-        { id: 2, text: "تۆماری فرۆشتنەکانی ١٠ ساڵ لەمەوپێش", category: null, correct: "archive" },
-        { id: 3, text: "ئیمەیڵی کڕیارەکان لە ٣ مانگ لەمەوپێش", category: null, correct: "keep" },
-        { id: 4, text: "زانیاری نەخۆشی کارمەندانی پێشوو", category: null, correct: "delete" },
-        { id: 5, text: "کۆپی پاسپۆرتی کڕیارەکان", category: null, correct: "delete" },
-        { id: 6, text: "تۆماری پارەدانەکانی ٢ ساڵ لەمەوپێش", category: null, correct: "keep" }
+        {
+            id: 1,
+            text: language === 'kurdish' ? "زانیاری کارمەندانی پێشوو" : "Information of former employees",
+            category: null,
+            correct: "delete"
+        },
+        {
+            id: 2,
+            text: language === 'kurdish' ? "تۆماری فرۆشتنەکانی ١٠ ساڵ لەمەوپێش" : "Sales records from 10 years ago",
+            category: null,
+            correct: "archive"
+        },
+        {
+            id: 3,
+            text: language === 'kurdish' ? "ئیمەیڵی کڕیارەکان لە ٣ مانگ لەمەوپێش" : "Customer emails from 3 months ago",
+            category: null,
+            correct: "keep"
+        },
+        {
+            id: 4,
+            text: language === 'kurdish' ? "زانیاری نەخۆشی کارمەندانی پێشوو" : "Health information of former employees",
+            category: null,
+            correct: "delete"
+        },
+        {
+            id: 5,
+            text: language === 'kurdish' ? "کۆپی پاسپۆرتی کڕیارەکان" : "Copies of customers' passports",
+            category: null,
+            correct: "delete"
+        },
+        {
+            id: 6,
+            text: language === 'kurdish' ? "تۆماری پارەدانەکانی ٢ ساڵ لەمەوپێش" : "Payment records from 2 years ago",
+            category: null,
+            correct: "keep"
+        }
     ]);
     const [showFeedback, setShowFeedback] = useState(false);
 
     const categories = [
-        { id: "keep", text: "هێشتنەوە (پێویستە)", color: "green" },
-        { id: "archive", text: "ئەرشیفکردن (بۆ مێژوو)", color: "blue" },
-        { id: "delete", text: "سڕینەوە (پێویست نییە)", color: "red" }
+        { id: "keep", text: language === 'kurdish' ? "هێشتنەوە (پێویستە)" : "Keep (Required)", color: "green" },
+        { id: "archive", text: language === 'kurdish' ? "ئەرشیفکردن (بۆ مێژوو)" : "Archive (For history)", color: "blue" },
+        { id: "delete", text: language === 'kurdish' ? "سڕینەوە (پێویست نییە)" : "Delete (Not needed)", color: "red" }
     ];
 
     const handleDragStart = (e, id) => {
@@ -45,9 +79,11 @@ const DataRetentionChallenge = ({ completeChallenge }) => {
 
     return (
         <div className="challenge-card">
-            <h3>چالاکی ٣: پاراستنی ماوەی زانیاری (Data Retention)</h3>
+            <h3>{language === 'kurdish' ? 'چالاکی ٣: پاراستنی ماوەی زانیاری (Data Retention)' : 'Activity 3: Data Retention Policy'}</h3>
             <p className="instructions">
-                زانیاریەکان بکە بۆ کۆگای ڕاستەقینەیان بەپێی سیاسەتی پاراستنی زانیاری کۆمپانیاکە
+                {language === 'kurdish'
+                    ? "زانیاریەکان بکە بۆ کۆگای ڕاستەقینەیان بەپێی سیاسەتی پاراستنی زانیاری کۆمپانیاکە"
+                    : "Drag the items to their correct categories according to the company's data retention policy"}
             </p>
 
             <div className="drag-container">
@@ -86,7 +122,7 @@ const DataRetentionChallenge = ({ completeChallenge }) => {
             </div>
 
             <button className="check-button" onClick={checkAnswers}>
-                پشکنین
+                {language === 'kurdish' ? 'پشکنین' : 'Check Answers'}
             </button>
 
             {showFeedback && (
@@ -96,12 +132,20 @@ const DataRetentionChallenge = ({ completeChallenge }) => {
                     {dragItems.every(item => item.category === item.correct) ? (
                         <>
                             <i className="fas fa-check-circle"></i>
-                            <p>زۆر باش! تۆ بە سەرکەوتوویی زانیاریەکانی جیاکردەوە بەپێی سیاسەتی پاراستنی زانیاری.</p>
+                            <p>
+                                {language === 'kurdish'
+                                    ? "زۆر باش! تۆ بە سەرکەوتوویی زانیاریەکانی جیاکردەوە بەپێی سیاسەتی پاراستنی زانیاری."
+                                    : "Excellent! You successfully categorized the information according to the data retention policy."}
+                            </p>
                         </>
                     ) : (
                         <>
                             <i className="fas fa-info-circle"></i>
-                            <p>هەندێک هەڵەت کردووە. لەبیرت بێت کە پێویستە زانیاری تەنها بۆ ماوەی پێویست بپارێزرێت.</p>
+                            <p>
+                                {language === 'kurdish'
+                                    ? "هەندێک هەڵەت کردووە. لەبیرت بێت کە پێویستە زانیاری تەنها بۆ ماوەی پێویست بپارێزرێت."
+                                    : "You made some mistakes. Remember that data should only be kept for the required period."}
+                            </p>
                         </>
                     )}
                 </div>
@@ -110,4 +154,4 @@ const DataRetentionChallenge = ({ completeChallenge }) => {
     );
 };
 
-export default DataRetentionChallenge
+export default DataRetentionChallenge;

@@ -1,7 +1,10 @@
-// APISecurityChallenge.js
 import React, { useState } from 'react';
+import {useLanguage} from "../../../LanguageContext.jsx";
 
 const APISecurityChallenge = ({ completeChallenge }) => {
+    const { language, translations } = useLanguage();
+    const t = translations[language];
+
     const [code, setCode] = useState(`function getUserData(userId) {
     // API call to get user data
     return fetch('/api/users/' + userId)
@@ -12,26 +15,42 @@ const APISecurityChallenge = ({ completeChallenge }) => {
     const [score, setScore] = useState(0);
 
     const vulnerabilities = [
-        { id: 1, name: "SQL Injection", fixed: false },
-        { id: 2, name: "IDOR (Insecure Direct Object Reference)", fixed: false },
-        { id: 3, name: "Missing Authentication", fixed: false },
-        { id: 4, name: "Sensitive Data Exposure", fixed: false }
+        {
+            id: 1,
+            name: language === 'kurdish' ? "SQL Injection" : "SQL Injection",
+            fixed: false
+        },
+        {
+            id: 2,
+            name: language === 'kurdish' ? "IDOR (Insecure Direct Object Reference)" : "IDOR (Insecure Direct Object Reference)",
+            fixed: false
+        },
+        {
+            id: 3,
+            name: language === 'kurdish' ? "Missing Authentication" : "Missing Authentication",
+            fixed: false
+        },
+        {
+            id: 4,
+            name: language === 'kurdish' ? "Sensitive Data Exposure" : "Sensitive Data Exposure",
+            fixed: false
+        }
     ];
 
     const checkCode = () => {
         let newScore = 0;
         let fixed = `function getUserData(userId) {
-    // Validate user input
+    // ${language === 'kurdish' ? "پشکنینی نێردراوەکە" : "Validate user input"}
     if (!userId || !/^\\d+$/.test(userId)) {
-        throw new Error('Invalid user ID');
+        throw new Error('${language === 'kurdish' ? "IDی بەکارهێنەر نادروستە" : "Invalid user ID"}');
     }
     
-    // Check if authenticated user has access to this data
+    // ${language === 'kurdish' ? "پشکنینی دەسەڵات" : "Check if authenticated user has access to this data"}
     if (!isAuthorized(userId)) {
-        throw new Error('Unauthorized');
+        throw new Error('${language === 'kurdish' ? "ڕێگەپێنەدراو" : "Unauthorized"}');
     }
     
-    // API call with parameterized query
+    // ${language === 'kurdish' ? "APIی بە پارامێتر" : "API call with parameterized query"}
     return fetch('/api/users/' + encodeURIComponent(userId), {
         headers: {
             'Authorization': 'Bearer ' + getAuthToken(),
@@ -39,11 +58,11 @@ const APISecurityChallenge = ({ completeChallenge }) => {
         }
     })
     .then(response => {
-        if (!response.ok) throw new Error('Request failed');
+        if (!response.ok) throw new Error('${language === 'kurdish' ? "داواکاری سەرنەکەوتوو" : "Request failed"}');
         return response.json();
     })
     .then(data => {
-        // Remove sensitive data before returning
+        // ${language === 'kurdish' ? "لابردنی زانیاری حەساس" : "Remove sensitive data before returning"}
         const { password, ssn, ...safeData } = data;
         return safeData;
     });
@@ -77,9 +96,11 @@ const APISecurityChallenge = ({ completeChallenge }) => {
 
     return (
         <div className="challenge-card">
-            <h3>چالاکی ٣: ئاسایشی API</h3>
+            <h3>{language === 'kurdish' ? 'چالاکی ٣: ئاسایشی API' : 'Activity 3: API Security'}</h3>
             <p className="instructions">
-                ئەم کۆدە APIیە چەند کێشەیەکی ئاسایشی هەیە. چاکەکانی پێوە بنووسە یان پێناسە بکە:
+                {language === 'kurdish'
+                    ? 'ئەم کۆدە APIیە چەند کێشەیەکی ئاسایشی هەیە. چاکەکانی پێوە بنووسە یان پێناسە بکە:'
+                    : 'This API code has several security issues. Write or describe your fixes:'}
             </p>
 
             <div className="code-editor">
@@ -92,12 +113,12 @@ const APISecurityChallenge = ({ completeChallenge }) => {
             </div>
 
             <button className="check-button" onClick={checkCode}>
-                پشکنینی کۆد
+                {language === 'kurdish' ? 'پشکنینی کۆد' : 'Check Code'}
             </button>
 
             {showFeedback && (
                 <div className="feedback">
-                    <h4>کێشەکانی ئاسایشی دۆزرانەوە:</h4>
+                    <h4>{language === 'kurdish' ? 'کێشەکانی ئاسایشی دۆزرانەوە:' : 'Security Issues Found:'}</h4>
                     <ul>
                         {vulnerabilities.map(vuln => (
                             <li key={vuln.id} className={vuln.fixed ? 'fixed' : 'unfixed'}>
@@ -106,11 +127,13 @@ const APISecurityChallenge = ({ completeChallenge }) => {
                         ))}
                     </ul>
 
-                    <p>کۆی خاڵەکان: {score} لە ٤٠</p>
+                    <p>
+                        {language === 'kurdish' ? 'کۆی خاڵەکان:' : 'Total score:'} {score} {language === 'kurdish' ? 'لە ٤٠' : 'out of 40'}
+                    </p>
 
                     {score < 30 && (
                         <div className="solution">
-                            <h5>نمونەی چارەسەر:</h5>
+                            <h5>{language === 'kurdish' ? 'نمونەی چارەسەر:' : 'Sample Solution:'}</h5>
                             <pre>{fixedCode}</pre>
                         </div>
                     )}
